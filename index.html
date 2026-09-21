@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>No More Myopia Panic — The 6S Method | 6S Myopia</title>
+<meta name="description" content="Your child is nearsighted? Stop panicking, start tracking. The 6S Method is a 25-year vision specialist's evidence-based system for childhood myopia — get the free Axial Length Cheat Sheet.">
+<link rel="canonical" href="https://www.6smyopia.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "6S Myopia",
+      "alternateName": "6S Axial Length Management",
+      "url": "https://www.6smyopia.com/",
+      "description": "Evidence-based childhood myopia prevention and control, built around axial length management.",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://www.6smyopia.com/about.html#linco",
+      "name": "Linco Lin",
+      "alternateName": "Linco",
+      "jobTitle": "Vision Specialist",
+      "description": "25 years in children's myopia prevention. Holder of China's highest national certification in optometry practice. Former visiting scholar at Pacific University College of Optometry. Creator of the 6S Method.",
+      "url": "https://www.6smyopia.com/about.html",
+      "sameAs": [
+        "https://www.amazon.com/author/lincolin",
+        "https://www.youtube.com/@Linco6S"
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --pine:#42BFAC;
+  --pine-dark:#2E9C8C;
+  --ink-green:#14332D;
+  --gray-bg:#F5F5F7;
+  --pine-soft:#CDEEE7;
+  --ink:#1D1D1F;
+  --gray-text:#6E6E73;
+  --hairline:rgba(0,0,0,.08);
+  --radius-lg:28px;
+  --radius-md:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+  color:var(--ink);background:#fff;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  font-size:17px;line-height:1.6;
+}
+::selection{background:var(--pine);color:#fff}
+a{color:var(--pine-dark);text-decoration:none}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--pine-dark);outline-offset:3px;border-radius:2px}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;height:52px;
+  background:rgba(255,255,255,.72);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--hairline);
+}
+.nav-inner{max-width:1024px;margin:0 auto;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.wordmark{font-weight:600;font-size:17px;letter-spacing:-0.01em;color:var(--ink-green)}
+.wordmark span{color:var(--pine-dark)}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-size:13px;color:var(--ink);opacity:.85;transition:opacity .2s}
+.nav-links a:hover{opacity:1}
+.nav-cta{color:var(--pine-dark)!important;font-weight:500}
+.nav-search{position:relative;display:flex;align-items:center}
+.search-toggle{background:none;border:none;cursor:pointer;padding:6px;color:var(--ink);opacity:.85;display:flex;align-items:center}
+.search-toggle:hover{opacity:1}
+.search-box{width:0;opacity:0;overflow:hidden;transition:width .3s cubic-bezier(.4,0,.2,1),opacity .2s}
+.nav-search.open .search-box{width:200px;opacity:1}
+.search-box input{width:100%;border:none;border-bottom:1px solid var(--hairline);font:inherit;font-size:13px;padding:4px 2px;background:transparent}
+.search-box input:focus{outline:none;border-bottom-color:var(--pine-dark)}
+.search-results{position:absolute;top:44px;right:0;width:320px;background:#fff;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.12);border:1px solid var(--hairline);overflow:hidden;display:none}
+.search-results.show{display:block}
+.search-results a{display:block;padding:12px 16px;border-bottom:1px solid var(--hairline);color:var(--ink)}
+.search-results a:last-child{border-bottom:none}
+.search-results a:hover{background:var(--gray-bg)}
+.sr-section{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--pine-dark);display:block;margin-bottom:2px}
+.sr-title{font-size:14px;font-weight:500;display:block}
+.sr-excerpt{font-size:12px;color:var(--gray-text);display:block;margin-top:2px}
+.sr-empty{padding:16px;font-size:13px;color:var(--gray-text)}
+
+/* ---------- layout ---------- */
+main{padding-top:52px}
+.section{padding:110px 24px}
+.section-gray{background:var(--gray-bg)}
+.section-dark{background:var(--ink-green);color:#fff}
+.container{max-width:1024px;margin:0 auto}
+.container-read{max-width:820px;margin:0 auto}
+.eyebrow{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--pine-dark);margin-bottom:18px}
+.section-dark .eyebrow{color:var(--pine)}
+h1{font-size:clamp(46px,7vw,84px);font-weight:600;letter-spacing:-0.032em;line-height:1.04;color:var(--ink-green)}
+h2{font-size:clamp(32px,4.6vw,52px);font-weight:600;letter-spacing:-0.03em;line-height:1.1;color:var(--ink-green);margin-bottom:20px}
+.section-dark h2{color:#fff}
+.sub{font-size:19px;color:var(--gray-text);max-width:660px;line-height:1.55}
+.center{text-align:center}
+.center .sub{margin-left:auto;margin-right:auto}
+
+.chevron{display:inline-flex;align-items:center;gap:6px;font-size:17px;font-weight:500;color:var(--pine-dark)}
+.chevron svg{transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.chevron:hover svg{transform:translateX(4px)}
+.section-dark .chevron{color:var(--pine)}
+
+/* ---------- hero: pure type + email capture ---------- */
+.hero{padding:150px 24px 120px;text-align:center}
+.hero .sub{margin:26px auto 0}
+.hero-form{max-width:480px;margin:48px auto 0;display:flex;gap:14px;align-items:flex-end;text-align:left}
+.hero-form input{
+  flex:1;border:none;border-bottom:1.5px solid var(--hairline);
+  font:inherit;font-size:16px;padding:12px 2px;background:transparent;color:var(--ink);
+}
+.hero-form input:focus{outline:none;border-bottom-color:var(--pine-dark)}
+.hero-form input::placeholder{color:#A1A1A6}
+.hero-form button{
+  background:none;border:none;cursor:pointer;white-space:nowrap;
+  font:inherit;font-size:16px;font-weight:500;color:var(--pine-dark);
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+}
+.hero-form button svg{transition:transform .25s}
+.hero-form button:hover svg{transform:translateX(4px)}
+.hero-note{margin-top:16px;font-size:12.5px;color:var(--gray-text)}
+.hero-proof{margin-top:72px;font-size:14px;color:var(--gray-text);letter-spacing:.01em}
+.hero-proof b{color:var(--ink-green);font-weight:600}
+
+/* ---------- start-here paths ---------- */
+.paths{margin-top:64px;border-top:1px solid var(--hairline)}
+.path{
+  display:grid;grid-template-columns:64px 1fr auto;gap:28px;align-items:center;
+  padding:34px 8px;border-bottom:1px solid var(--hairline);color:var(--ink);
+  transition:background .2s;
+}
+.path:hover{background:var(--gray-bg)}
+.path-num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--pine-dark)}
+.path-body h3{font-size:clamp(19px,2.4vw,24px);font-weight:600;letter-spacing:-0.01em;color:var(--ink-green);line-height:1.3}
+.path-body p{margin-top:6px;font-size:14.5px;color:var(--gray-text);max-width:560px;line-height:1.55}
+.path svg{transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.path:hover svg{transform:translateX(6px)}
+
+/* ---------- the one number ---------- */
+.one-number blockquote{
+  font-size:clamp(26px,3.6vw,40px);font-weight:600;letter-spacing:-0.025em;
+  line-height:1.28;color:var(--ink-green);max-width:820px;margin:0 auto;
+}
+.one-number blockquote em{font-style:normal;color:var(--pine-dark)}
+.one-number .attr{margin-top:32px;font-size:14px;color:var(--gray-text)}
+.one-number .chevron{margin-top:20px}
+
+/* ---------- method bento ---------- */
+.bento{display:grid;gap:16px;margin-top:56px;grid-template-columns:repeat(3,1fr);grid-auto-rows:minmax(170px,auto)}
+.tile{background:#fff;border-radius:var(--radius-md);padding:30px;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.tile:hover{transform:translateY(-4px)}
+.tile-s{font-size:40px;font-weight:600;letter-spacing:-0.03em;color:var(--pine);line-height:1;font-family:'JetBrains Mono',monospace}
+.tile-name{margin-top:14px;font-size:18px;font-weight:600;letter-spacing:-0.01em;color:var(--ink-green)}
+.tile-desc{margin-top:8px;font-size:14px;color:var(--gray-text);line-height:1.55;flex:1}
+.tile-wide{grid-column:span 2}
+
+/* ---------- qa list ---------- */
+.qa-list{margin-top:56px;border-top:1px solid var(--hairline)}
+.qa-item{display:flex;align-items:baseline;gap:28px;padding:26px 8px;border-bottom:1px solid var(--hairline);color:var(--ink);transition:background .2s}
+.qa-item:hover{background:#fff}
+.qa-num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--pine-dark);flex-shrink:0;min-width:28px}
+.qa-q{font-size:clamp(18px,2.2vw,22px);font-weight:500;letter-spacing:-0.01em;flex:1;line-height:1.35}
+.qa-item svg{flex-shrink:0;align-self:center;transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.qa-item:hover svg{transform:translateX(6px)}
+
+/* ---------- latest ---------- */
+.latest-list{margin-top:56px;border-top:1px solid var(--hairline)}
+.latest-item{display:grid;grid-template-columns:110px 92px 1fr auto;gap:24px;align-items:baseline;padding:24px 8px;border-bottom:1px solid var(--hairline);color:var(--ink);transition:background .2s}
+.latest-item:hover{background:#fff}
+.latest-date{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gray-text)}
+.latest-tag{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--pine-dark)}
+.latest-title{font-size:clamp(16px,2vw,19px);font-weight:500;letter-spacing:-0.01em;line-height:1.4}
+.latest-item svg{align-self:center;transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.latest-item:hover svg{transform:translateX(6px)}
+
+/* ---------- book band ---------- */
+.book-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center;margin-top:20px}
+.book-points{list-style:none;margin-top:28px}
+.book-points li{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.14);font-size:15.5px;color:rgba(255,255,255,.85);line-height:1.5}
+.book-points li:last-child{border-bottom:none}
+.book-points b{color:#fff;font-weight:600}
+.book-card{background:rgba(255,255,255,.06);border-radius:var(--radius-md);padding:40px}
+.book-title{font-size:26px;font-weight:600;letter-spacing:-0.02em;color:#fff;line-height:1.25}
+.book-sub{font-size:14px;color:rgba(255,255,255,.65);margin-top:12px;line-height:1.6}
+.book-badge{display:inline-block;margin-top:20px;padding:6px 14px;border:1px solid var(--pine);border-radius:999px;font-size:12.5px;font-weight:500;color:var(--pine);letter-spacing:.02em}
+.book-cta{margin-top:28px}
+
+/* ---------- final cta ---------- */
+.final{padding:130px 24px;text-align:center}
+.final .hero-form{margin-top:44px}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--hairline);padding:40px 24px 48px}
+.footer-inner{max-width:1024px;margin:0 auto}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap;font-size:12px}
+.footer-links a{color:var(--gray-text)}
+.footer-links a:hover{color:var(--ink)}
+.footer-meta{margin-top:18px;font-size:12px;color:var(--gray-text);line-height:1.7}
+.footer-disclaimer{margin-top:10px;font-size:12px;color:#A1A1A6;line-height:1.7;max-width:720px}
+
+/* ---------- reveal (JS-only; no-JS fully visible for crawlers) ---------- */
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .tile-wide{grid-column:span 2}
+}
+@media (max-width:820px){
+  .section{padding:80px 24px}
+  .hero{padding:110px 24px 90px}
+  .bento{grid-template-columns:1fr}
+  .tile-wide{grid-column:span 1}
+  .book-grid{grid-template-columns:1fr;gap:40px}
+  .path{grid-template-columns:44px 1fr auto;gap:18px}
+}
+@media (max-width:640px){
+  .nav-links li:not(:last-child){display:none}
+  .hero-form{flex-direction:column;align-items:stretch;gap:6px}
+  .hero-form button{align-self:flex-start}
+  .path{grid-template-columns:1fr;gap:8px}
+  .path svg{display:none}
+  .latest-item{grid-template-columns:1fr;gap:4px;padding:20px 4px}
+  .latest-item svg{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="wordmark" href="/">6S <span>Myopia</span></a>
+    <ul class="nav-links">
+      <li><a href="#start">Start Here</a></li>
+      <li><a href="#method">Method</a></li>
+      <li><a href="#parents-ask">Parents Ask</a></li>
+      <li><a href="#book">Book</a></li>
+      <li><a class="nav-cta" href="https://app.6smyopia.com">Free Tracker</a></li>
+      <li>
+        <div class="nav-search" id="navSearch">
+          <button class="search-toggle" id="searchToggle" aria-label="Search" aria-expanded="false">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          </button>
+          <div class="search-box">
+            <input type="search" id="searchInput" placeholder="Search axial length, red light…" aria-label="Search this site" autocomplete="off">
+          </div>
+          <div class="search-results" id="searchResults" role="listbox"></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ HERO: conversion first ============ -->
+<header class="hero">
+  <p class="eyebrow reveal">For parents who just heard "your child is nearsighted"</p>
+  <h1 class="reveal">No more<br>myopia panic.</h1>
+  <p class="sub reveal">A calm, evidence-based system for your child's myopia — from a vision specialist who has guided 10,000+ families over 25 years, including his own two sons.</p>
+  <form class="hero-form reveal" action="https://assets.mailerlite.com/jsonp/2647845/forms/199135831245456781/subscribe" method="post" target="_blank" rel="noopener">
+    <input type="email" name="fields[email]" placeholder="Your email address" aria-label="Email address" autocomplete="email" requi
+    <button type="submit">Send it free <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+  </form>
+  <p class="hero-note reveal">Free: <b style="color:var(--ink-green);font-weight:500">The Parent’s Axial Length Cheat Sheet</b> — one page, the key numbers. No spam, unsubscribe anytime.</p>
+  <p class="hero-proof reveal"><b>25 years</b> · <b>10,000+ families</b> · <b>2 sons</b> myopia-free after 9 and 4.5 years · <b>9 case files</b> published with full data</p>
+</header>
+
+<!-- ============ START HERE: intent paths ============ -->
+<section class="section section-gray" id="start">
+  <div class="container-read">
+    <div class="reveal">
+      <p class="eyebrow">Start Here</p>
+      <h2>Where is your family<br>right now?</h2>
+    </div>
+    <div class="paths">
+      <a class="path reveal" href="/qa/failed-vision-screening-first-24-hours.html">
+        <span class="path-num">01</span>
+        <span class="path-body">
+          <h3>"We just failed a vision screening."</h3>
+          <p>Breathe. What you do in the next 24 hours matters — and so does what you don't do. Start with the three things to do immediately.</p>
+        </span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E9C8C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="path reveal" href="/qa/what-is-axial-length.html">
+        <span class="path-num">02</span>
+        <span class="path-body">
+          <h3>"I want to understand what's happening to my child's eyes."</h3>
+          <p>Learn the one number that matters more than the eye chart — and why 20/20 vision does not mean your child is safe.</p>
+        </span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E9C8C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="path reveal" href="/qa/ortho-k-vs-defocus-lenses.html">
+        <span class="path-num">03</span>
+        <span class="path-body">
+          <h3>"I'm comparing treatments — ortho-k, defocus lenses, red light, atropine."</h3>
+          <p>Every clinic swears theirs is best. Here's an honest, side-by-side comparison: evidence, costs, and which kids each option suits.</p>
+        </span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E9C8C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="path reveal" href="https://app.6smyopia.com">
+        <span class="path-num">04</span>
+        <span class="path-body">
+          <h3>"We're already in treatment. I need to know if it's working."</h3>
+          <p>The trend is everything. Track your child's axial length over time — free — and see the warning sign before it matters.</p>
+        </span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E9C8C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE ONE NUMBER ============ -->
+<section class="section one-number">
+  <div class="container center">
+    <p class="eyebrow reveal">The One Insight</p>
+    <blockquote class="reveal">"The eye chart tells you how your child sees <em>today</em>. Axial length tells you where their eyes are <em>going</em>. Parents who track the second number never panic about the first."</blockquote>
+    <p class="attr reveal">— Linco, creator of the 6S Method</p>
+    <a class="chevron reveal" href="/qa/what-is-axial-length.html">What is axial length? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
+  </div>
+</section>
+
+<!-- ============ METHOD ============ -->
+<section class="section section-gray" id="method">
+  <div class="container">
+    <div class="center reveal">
+      <p class="eyebrow">The 6S Method</p>
+      <h2>Not one magic device.<br>Six layers of defense.</h2>
+      <p class="sub" style="margin:0 auto">Myopia isn't caused by one thing, and it can't be stopped by one thing. Six evidence-based modules, combined into one personalized plan.</p>
+    </div>
+    <div class="bento">
+      <div class="tile tile-wide reveal">
+        <div class="tile-s">S1</div>
+        <div class="tile-name">Healthy Light Environment</div>
+        <div class="tile-desc">The cheapest, fastest win in myopia prevention — turn an eye-straining home into an eye-friendly one.</div>
+      </div>
+      <div class="tile reveal">
+        <div class="tile-s">S2</div>
+        <div class="tile-name">Red Light Therapy</div>
+        <div class="tile-desc">Minutes a day of low-level red light, shown in studies to slow axial elongation.</div>
+      </div>
+      <div class="tile reveal">
+        <div class="tile-s">S3</div>
+        <div class="tile-name">Optical Correction</div>
+        <div class="tile-desc">Defocus lenses and ortho-k that actively manage growth, not just correct it.</div>
+      </div>
+      <div class="tile reveal">
+        <div class="tile-s">S4</div>
+        <div class="tile-name">Near-to-Far Viewing</div>
+        <div class="tile-desc">Turn close-up work into distance viewing — homework without the strain.</div>
+      </div>
+      <div class="tile reveal">
+        <div class="tile-s">S5</div>
+        <div class="tile-name">Vision Function Training</div>
+        <div class="tile-desc">A fitness coach for the eyes: accommodation and vergence, trained.</div>
+      </div>
+      <div class="tile tile-wide reveal">
+        <div class="tile-s">S6</div>
+        <div class="tile-name">Nutrition &amp; Medical Support</div>
+        <div class="tile-desc">Lutein, low-dose atropine and other medical options — always with your eye care professional.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARENTS ASK ============ -->
+<section class="section section-gray" id="parents-ask" style="border-top:1px solid var(--hairline)">
+  <div class="container-read">
+    <div class="reveal">
+      <p class="eyebrow">Parents Ask</p>
+      <h2>The questions parents<br>ask at 2 a.m.</h2>
+    </div>
+    <div class="qa-list">
+      <a class="qa-item reveal" href="/qa/what-is-axial-length.html">
+        <span class="qa-num">01</span>
+        <span class="qa-q">What is axial length — and why does it matter more than the eye chart?</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E9C8C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="qa-item reveal" href="/qa/failed-vision-screening-first-24-hours.html">
+        <span class="qa-num">02</span>
+        <span class="qa-q">My child failed the vision screening. What should I do in the first 24 hours?</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E9C8C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="qa-item reveal" href="/qa/normal-axial-length-7-year-old.html">
+        <span class="qa-num">03</span>
+        <span class="qa-q">What is a normal axial length for a 7-year-old?</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E9C8C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="qa-item reveal" href="/qa/red-light-therapy-safety.html">
+        <span class="qa-num">04</span>
+        <span class="qa-q">Is red light therapy safe for my child's eyes?</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E9C8C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="qa-item reveal" href="/qa/ortho-k-vs-defocus-lenses.html">
+        <span class="qa-num">05</span>
+        <span class="qa-q">Ortho-k vs defocus lenses — an honest comparison for parents</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E9C8C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LATEST ============ -->
+<section class="section section-gray" id="latest" style="border-top:1px solid var(--hairline)">
+  <div class="container-read">
+    <div class="reveal">
+      <p class="eyebrow">Latest</p>
+      <h2>New from 6S</h2>
+    </div>
+    <div class="latest-list">
+<!-- LATEST:START（此标记之间的内容由 scripts/build_latest.py 根据 updates.json 自动生成，请勿手改） -->
+      <a class="latest-item reveal" href="/data/axial-growth-rate-by-age.html">
+        <span class="latest-date">2026-09-08</span>
+        <span class="latest-tag">Data</span>
+        <span class="latest-title">Average axial growth rate by age — from 10,000 children</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E9C8C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="latest-item reveal" href="/case/2">
+        <span class="latest-date">2026-09-01</span>
+        <span class="latest-tag">Case</span>
+        <span class="latest-title">Case File: Xiaoyu's family — from -1.00D to 0.00D in twelve months</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E9C8C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="latest-item reveal" href="/research/dims-five-year-data.html">
+        <span class="latest-date">2026-08-25</span>
+        <span class="latest-tag">Research</span>
+        <span class="latest-title">Research Digest: what the new 5-year defocus-lens data means for your child</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E9C8C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+<!-- LATEST:END -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOK ============ -->
+<section class="section section-dark" id="book">
+  <div class="container">
+    <p class="eyebrow reveal">The Book</p>
+    <div class="book-grid">
+      <div class="reveal">
+        <h2>No More<br>Myopia Panic</h2>
+        <p style="color:rgba(255,255,255,.72);font-size:17px;max-width:520px;line-height:1.6;">The 6S Method for Preventing and Controlling Your Child's Nearsightedness — a 25-year vision specialist's guide to axial length management. Your first 24 hours, and your next ten years.</p>
+        <ul class="book-points">
+          <li><b>The five truths about myopia</b> — why "glasses make it worse" is a dangerous myth</li>
+          <li><b>9 complete real-family case files</b> — find the family that looks like yours</li>
+          <li><b>19 ready-to-use tools</b> — checklists, doctor scripts, home light audits</li>
+          <li><b>Honest comparisons</b> — ortho-k, defocus lenses, red light, atropine</li>
+        </ul>
+      </div>
+      <div class="book-card reveal">
+        <div class="book-title">The method in this book, made trackable.</div>
+        <p class="book-sub">Every reader gets <b style="color:#fff">12 months of the Pro axial-length tracker free</b> — unlimited records, percentile analysis, and follow-up reminders. The code is inside the book.</p>
+        <span class="book-badge">Book + 1 year of Pro — one purchase</span>
+        <div class="book-cta">
+          <a class="chevron" href="https://www.amazon.com/dp/B0HJQLF784">Get the book on Amazon <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final">
+  <p class="eyebrow reveal">One Last Thing</p>
+  <h2 class="reveal">Start with the numbers.<br>The panic takes care of itself.</h2>
+  <form class="hero-form reveal" action="https://assets.mailerlite.com/jsonp/2647845/forms/199135831245456781/subscribe" method="post" target="_blank" rel="noopener">
+    <input type="email" name="fields[email]" placeholder="Your email address" aria-label="Email address" autocomplete="email" requi
+    <button type="submit">Send it free <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+  </form>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#start">Start Here</a>
+      <a href="#method">The 6S Method</a>
+      <a href="#parents-ask">Parents Ask</a>
+      <a href="#book">The Book</a>
+      <a href="https://app.6smyopia.com">Free Tracker</a>
+      <a href="/about.html">About Linco</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="mailto:hello@6smyopia.com">hello@6smyopia.com</a>
+    </div>
+    <p class="footer-meta">© 2026 6S Axial Length Management · The 6S Method, developed by Linco</p>
+    <p class="footer-disclaimer">Disclaimer: This site provides educational content only and does not constitute medical advice. Always consult a qualified eye care professional about your child's individual condition before starting any intervention.</p>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+      });
+    },{threshold:.12});
+    els.forEach(function(el){io.observe(el);});
+  }else{
+    els.forEach(function(el){el.classList.add('in');});
+  }
+
+  var INDEX=[
+    {section:'Start Here',title:'Just failed a vision screening',url:'/qa/failed-vision-screening-first-24-hours.html',excerpt:'Three things to do in the first 24 hours — and three to never do.',tags:'failed vision screening panic 24 hours school notice start'},
+    {section:'Start Here',title:'Understand what is happening',url:'/qa/what-is-axial-length.html',excerpt:'The one number that matters more than the eye chart.',tags:'axial length eye chart number understand start'},
+    {section:'Start Here',title:'Comparing treatments',url:'/qa/ortho-k-vs-defocus-lenses.html',excerpt:'Ortho-k, defocus lenses, red light, atropine — honest comparison.',tags:'ortho-k defocus lenses red light atropine comparison treatment'},
+    {section:'Start Here',title:'Already in treatment — track it',url:'https://app.6smyopia.com',excerpt:'Free axial length tracking: is the treatment working?',tags:'track tracker app free treatment working trend'},
+    {section:'Method',title:'The 6S Method — six layers of defense',url:'#method',excerpt:'Light, red light, optics, near-to-far, training, nutrition & medical.',tags:'6s method layers defense s1 s2 s3 s4 s5 s6'},
+    {section:'Parents Ask',title:'Normal axial length for a 7-year-old',url:'/qa/normal-axial-length-7-year-old.html',excerpt:'Reference values by age, and how to read the report.',tags:'normal axial length 7 year old reference values age'},
+    {section:'Parents Ask',title:'Is red light therapy safe?',url:'/qa/red-light-therapy-safety.html',excerpt:'What the evidence says about low-level red light.',tags:'red light therapy safety rlrl evidence'},
+    {section:'Book',title:'No More Myopia Panic — the book',url:'#book',excerpt:'The 6S Method in print, with 9 case files and 19 tools.',tags:'book amazon no more myopia panic linco'},
+    {section:'Case Files',title:'Xiang: −1.50D to 0.00D in five months',url:'/case/1/',excerpt:'Real follow-up record: combination control cleared low myopia.',tags:'case file xiang cleared zero low myopia defocus red light real data curve'},
+    {section:'Case Files',title:'Xiaojing: six years holding the 26mm line',url:'/case/2/',excerpt:'High genetic risk, early high myopia — axial length held six years.',tags:'case file xiaojing high myopia ortho-k 26mm six years genetics real data curve'},
+    {section:'Case Files',title:'Case files library',url:'/case/',excerpt:'Real families, real curves — the records behind the book.',tags:'case files library real data curves book'},
+    {section:'Free',title:'Axial Length Cheat Sheet',url:'/',excerpt:'One free page: the key numbers every parent should know.',tags:'cheat sheet free pdf download email'}
+  ];
+  var nav=document.getElementById('navSearch'),
+      toggle=document.getElementById('searchToggle'),
+      input=document.getElementById('searchInput'),
+      results=document.getElementById('searchResults');
+  function closeSearch(){nav.classList.remove('open');results.classList.remove('show');toggle.setAttribute('aria-expanded','false');}
+  toggle.addEventListener('click',function(){
+    var open=nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded',open);
+    if(open){input.focus();}else{results.classList.remove('show');}
+  });
+  input.addEventListener('input',function(){
+    var q=input.value.trim().toLowerCase();
+    if(q.length<2){results.classList.remove('show');return;}
+    var hits=INDEX.filter(function(it){
+      return (it.title+' '+it.tags+' '+it.excerpt).toLowerCase().indexOf(q)>-1;
+    }).slice(0,5);
+    results.innerHTML=hits.length?hits.map(function(h){
+      return '<a href="'+h.url+'" role="option"><span class="sr-section">'+h.section+'</span><span class="sr-title">'+h.title+'</span><span class="sr-excerpt">'+h.excerpt+'</span></a>';
+    }).join(''):'<div class="sr-empty">No results for \u201C'+q.replace(/</g,'&lt;')+'\u201D</div>';
+    results.classList.add('show');
+  });
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){var first=results.querySelector('a');if(first){window.location.href=first.getAttribute('href');}}
+    if(e.key==='Escape'){closeSearch();}
+  });
+  document.addEventListener('click',function(e){if(!nav.contains(e.target)){closeSearch();}});
+})();
+</script>
+</body>
+</html>

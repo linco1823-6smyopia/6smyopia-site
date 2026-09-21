@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Axial Length Tracker | 6S Myopia</title>
+<meta name="description" content="The free 6S axial-length tracker lives at app.6smyopia.com — redirecting you now.">
+<!-- 印刷短链 /app 的落点：301 到 SaaS 子域名。服务器端优先用 Nginx 301：
+     location = /app { return 301 https://app.6smyopia.com; }
+     location = /app/ { return 301 https://app.6smyopia.com; }
+     本页是静态层兜底（meta refresh + JS + 手动链接），永不删除。 -->
+<meta http-equiv="refresh" content="0; url=https://app.6smyopia.com">
+<link rel="canonical" href="https://app.6smyopia.com">
+<style>
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#F5F5F7;color:#1D1D1F}
+a{color:#2E9C8C;font-weight:500}
+p{font-size:17px}
+</style>
+</head>
+<body>
+<p>Taking you to the free tracker… <a href="https://app.6smyopia.com">Continue ›</a></p>
+<script>window.location.replace("https://app.6smyopia.com");</script>
+</body>
+</html>
