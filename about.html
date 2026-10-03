@@ -31,7 +31,6 @@
       "jobTitle": "Vision Specialist",
       "description": "Linco has spent 25 years helping over 10,000 families prevent and control childhood myopia. Holder of China's highest national certification in optometry practice, he also served as a provincial certification examiner and a guest university lecturer. A former visiting scholar at Pacific University College of Optometry, he is the creator of the 6S Method and the author of No More Myopia Panic. His two sons remain myopia-free after 9 and 4.5 years of prevention.",
       "url": "https://www.6smyopia.com/about.html",
-      "image": "https://www.6smyopia.com/images/linco-portrait.jpg",
       "nationality": "China",
       "knowsAbout": [
         "childhood myopia prevention and control",
@@ -67,8 +66,7 @@
       "sameAs": [
         "https://www.amazon.com/author/lincolin",
         "https://www.youtube.com/@Linco6S",
-        "https://www.goodreads.com/author/show/lincolin",
-        "https://www.wikidata.org/wiki/QXXXXXXXX"
+        "https://www.goodreads.com/author/show/lincolin"
       ]
     },
     {
@@ -386,6 +384,7 @@ footer{border-top:1px solid var(--hairline);padding:48px 24px 64px;background:#f
       <a href="/#book">The Book</a>
       <a href="https://app.6smyopia.com">Free Tracker</a>
       <a href="/about.html">About Linco</a>
+      <a href="/research/evidence-library.html">Evidence Library</a>
       <a href="/privacy.html">Privacy Policy</a>
       <a href="mailto:6s@6smyopia.com">6s@6smyopia.com</a>
       <a href="mailto:linco1823@gmail.com">linco1823@gmail.com</a>
@@ -411,18 +410,23 @@ document.documentElement.classList.add('js');
   }
 
   var INDEX=[
+    {section:'Data',title:'Axial growth rate by age',url:'/data/axial-growth-rate-by-age.html',excerpt:'How fast is too fast? The age-by-age reference numbers.',tags:'growth rate mm per year age reference physiological normal data'},
+    {section:'Research',title:'5+ years of defocus-lens data',url:'/research/dims-five-year-data.html',excerpt:'The long-term DIMS and Stellest evidence, translated for parents.',tags:'dims hal stellest five year long term research fda defocus'},
+    {section:'Research',title:'Evidence Library: 98 studies, annotated',url:'/research/evidence-library.html',excerpt:'98 scientific references across 10 topics, 87 with DOI links, each annotated in plain language.',tags:'evidence references studies doi bibliography peer reviewed research library papers citations'},
     {section:'Start Here',title:'Just failed a vision screening',url:'/qa/failed-vision-screening-first-24-hours.html',excerpt:'Three things to do in the first 24 hours — and three to never do.',tags:'failed vision screening panic 24 hours school notice start'},
     {section:'Start Here',title:'Understand what is happening',url:'/qa/what-is-axial-length.html',excerpt:'The one number that matters more than the eye chart.',tags:'axial length eye chart number understand start'},
     {section:'Start Here',title:'Comparing treatments',url:'/qa/ortho-k-vs-defocus-lenses.html',excerpt:'Ortho-k, defocus lenses, red light, atropine — honest comparison.',tags:'ortho-k defocus lenses red light atropine comparison treatment'},
     {section:'Start Here',title:'Already in treatment — track it',url:'https://app.6smyopia.com',excerpt:'Free axial length tracking: is the treatment working?',tags:'track tracker app free treatment working trend'},
-    {section:'Method',title:'The 6S Method — six layers of defense',url:'/#method',excerpt:'Light, red light, optics, near-to-far, training, nutrition & medical.',tags:'6s method layers defense s1 s2 s3 s4 s5 s6'},
+    {section:'Method',title:'The 6S Method — six layers of defense',url:'#method',excerpt:'Light, red light, optics, near-to-far, training, nutrition & medical.',tags:'6s method layers defense s1 s2 s3 s4 s5 s6'},
     {section:'Parents Ask',title:'Normal axial length for a 7-year-old',url:'/qa/normal-axial-length-7-year-old.html',excerpt:'Reference values by age, and how to read the report.',tags:'normal axial length 7 year old reference values age'},
     {section:'Parents Ask',title:'Is red light therapy safe?',url:'/qa/red-light-therapy-safety.html',excerpt:'What the evidence says about low-level red light.',tags:'red light therapy safety rlrl evidence'},
-    {section:'Book',title:'No More Myopia Panic — the book',url:'/#book',excerpt:'The 6S Method in print, with 9 case files and 19 tools.',tags:'book amazon no more myopia panic linco'},
+    {section:'Book',title:'No More Myopia Panic — the book',url:'#book',excerpt:'The 6S Method in print, with 9 case files and 19 tools.',tags:'book amazon no more myopia panic linco'},
     {section:'Case Files',title:'Xiang: −1.50D to 0.00D in five months',url:'/case/1/',excerpt:'Real follow-up record: combination control cleared low myopia.',tags:'case file xiang cleared zero low myopia defocus red light real data curve'},
     {section:'Case Files',title:'Xiaojing: six years holding the 26mm line',url:'/case/2/',excerpt:'High genetic risk, early high myopia — axial length held six years.',tags:'case file xiaojing high myopia ortho-k 26mm six years genetics real data curve'},
+    {section:'Case Files',title:'Xiaotian: never myopic at 10 — prevention works',url:'/case/3/',excerpt:'Started at 5.5 before myopia — 4.5 years later, still has reserve.',tags:'case file xiaotian prevention never myopic reserve red light outdoor real data curve'},
     {section:'Case Files',title:'Case files library',url:'/case/',excerpt:'Real families, real curves — the records behind the book.',tags:'case files library real data curves book'},
-    {section:'About',title:'About Linco',url:'/about.html',excerpt:'25 years, 10,000+ families, creator of the 6S Method.',tags:'about linco bio author founder credentials media kit press'},
+    {section:'Book',title:'Get the book — all platforms',url:'/book/',excerpt:'No More Myopia Panic: Amazon, Apple Books, Kobo and more.',tags:'book buy amazon apple books kobo draft2digital no more myopia panic'},
+    {section:'Free',title:'Axial Length Cheat Sheet',url:'/cheat-sheet/',excerpt:'One free page: the key numbers every parent should know.',tags:'cheat sheet free download email axial length numbers'},
     {section:'Free',title:'Axial Length Cheat Sheet',url:'/',excerpt:'One free page: the key numbers every parent should know.',tags:'cheat sheet free pdf download email'}
   ];
   var nav=document.getElementById('navSearch'),

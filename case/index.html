@@ -176,7 +176,7 @@ footer{border-top:1px solid var(--hairline);padding:48px 24px 64px;background:#f
     <strong>Why publish raw records?</strong> Because a single number in an ad means nothing, and a curve means everything. Myopia control is judged by the <strong>trend across years</strong> — so here are the trends, with the full data tables, including the visits that did not go perfectly.
   </div>
 
-  <div class="related-grid" style="grid-template-columns:repeat(2,1fr);margin:0 0 16px;max-width:none">
+  <div class="related-grid" style="grid-template-columns:repeat(3,1fr);margin:0 0 16px;max-width:none">
     <a class="related-card" href="/case/1/" style="padding:32px">
       <p class="eyebrow" style="margin-bottom:10px">Case File 01</p>
       <h3 style="font-size:20px">Xiang: −1.50D to 0.00D in five months</h3>
@@ -187,6 +187,12 @@ footer{border-top:1px solid var(--hairline);padding:48px 24px 64px;background:#f
       <p class="eyebrow" style="margin-bottom:10px">Case File 02</p>
       <h3 style="font-size:20px">Xiaojing: six years holding the 26mm line</h3>
       <p>Age 8, early high myopia, high genetic risk · ortho-k + red light · six years later, both eyes shorter than the start. Braking is victory.</p>
+      <p style="margin-top:14px;color:var(--pine-dark);font-weight:500;font-size:15px">Read the record ›</p>
+    </a>
+    <a class="related-card" href="/case/3/" style="padding:32px">
+      <p class="eyebrow" style="margin-bottom:10px">Case File 03</p>
+      <h3 style="font-size:20px">Xiaotian: never myopic at 10</h3>
+      <p>Started prevention at 5½, before anything was wrong · red light + outdoor + lutein · 4.5 years later, still +0.50D reserve. The cheapest myopia is the one that never happens.</p>
       <p style="margin-top:14px;color:var(--pine-dark);font-weight:500;font-size:15px">Read the record ›</p>
     </a>
   </div>
@@ -224,6 +230,7 @@ footer{border-top:1px solid var(--hairline);padding:48px 24px 64px;background:#f
       <a href="/#book">The Book</a>
       <a href="https://app.6smyopia.com">Free Tracker</a>
       <a href="/about.html">About Linco</a>
+      <a href="/research/evidence-library.html">Evidence Library</a>
       <a href="/privacy.html">Privacy Policy</a>
       <a href="mailto:hello@6smyopia.com">hello@6smyopia.com</a>
     </div>
@@ -239,6 +246,10 @@ document.documentElement.classList.add('js');
     els.forEach(function(el){io.observe(el);});
   }else{els.forEach(function(el){el.classList.add('in');});}
   var INDEX=[
+    {section:'Parents Ask',title:'Is red light therapy safe?',url:'/qa/red-light-therapy-safety.html',excerpt:'What the trials show, and the monitoring that makes it responsible.',tags:'red light rlrl safety 650nm therapy retina oct'},
+    {section:'Data',title:'Axial growth rate by age',url:'/data/axial-growth-rate-by-age.html',excerpt:'How fast is too fast? The age-by-age reference numbers.',tags:'growth rate mm per year age reference physiological normal data'},
+    {section:'Research',title:'5+ years of defocus-lens data',url:'/research/dims-five-year-data.html',excerpt:'The long-term DIMS and Stellest evidence, translated for parents.',tags:'dims hal stellest five year long term research fda defocus'},
+    {section:'Research',title:'Evidence Library: 98 studies, annotated',url:'/research/evidence-library.html',excerpt:'98 scientific references across 10 topics, 87 with DOI links, each annotated in plain language.',tags:'evidence references studies doi bibliography peer reviewed research library papers citations'},
     {section:'Start Here',title:'Just failed a vision screening',url:'/qa/failed-vision-screening-first-24-hours.html',excerpt:'Three things to do in the first 24 hours — and three to never do.',tags:'failed vision screening panic 24 hours school notice start'},
     {section:'Start Here',title:'Understand what is happening',url:'/qa/what-is-axial-length.html',excerpt:'The one number that matters more than the eye chart.',tags:'axial length eye chart number understand start'},
     {section:'Start Here',title:'Comparing treatments',url:'/qa/ortho-k-vs-defocus-lenses.html',excerpt:'Ortho-k, defocus lenses, red light, atropine — honest comparison.',tags:'ortho-k defocus lenses red light atropine comparison treatment'},
@@ -250,7 +261,10 @@ document.documentElement.classList.add('js');
     {section:'Book',title:'No More Myopia Panic — the book',url:'/#book',excerpt:'The 6S Method in print, with 9 case files and 19 tools.',tags:'book amazon no more myopia panic linco'},
     {section:'Case Files',title:'Xiang: −1.50D to 0.00D in five months',url:'/case/1/',excerpt:'Real follow-up record: combination control cleared low myopia.',tags:'case file xiang cleared zero low myopia defocus red light real data curve'},
     {section:'Case Files',title:'Xiaojing: six years holding the 26mm line',url:'/case/2/',excerpt:'High genetic risk, early high myopia — axial length held six years.',tags:'case file xiaojing high myopia ortho-k 26mm six years genetics real data curve'},
+    {section:'Case Files',title:'Xiaotian: never myopic at 10 — prevention works',url:'/case/3/',excerpt:'Started at 5.5 before myopia — 4.5 years later, still has reserve.',tags:'case file xiaotian prevention never myopic reserve red light outdoor real data curve'},
     {section:'Case Files',title:'Case files library',url:'/case/',excerpt:'Real families, real curves — the records behind the book.',tags:'case files library real data curves book'},
+    {section:'Book',title:'Get the book — all platforms',url:'/book/',excerpt:'No More Myopia Panic: Amazon, Apple Books, Kobo and more.',tags:'book buy amazon apple books kobo draft2digital no more myopia panic'},
+    {section:'Free',title:'Axial Length Cheat Sheet',url:'/cheat-sheet/',excerpt:'One free page: the key numbers every parent should know.',tags:'cheat sheet free download email axial length numbers'},
     {section:'About',title:'About Linco',url:'/about.html',excerpt:'25 years, 10,000+ families, creator of the 6S Method.',tags:'about linco bio author founder credentials media kit press'}
   ];
   var nav=document.getElementById('navSearch'),toggle=document.getElementById('searchToggle'),input=document.getElementById('searchInput'),results=document.getElementById('searchResults');
