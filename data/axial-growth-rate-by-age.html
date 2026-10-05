@@ -185,6 +185,12 @@ footer{border-top:1px solid var(--hairline);padding:48px 24px 64px;background:#f
 .proj-risk-moderate{background:#FDF3E0;color:#9A6A0A}
 .proj-risk-elevated{background:#FDE8D9;color:#B25A09}
 .proj-risk-high{background:#FADBD8;color:#C0392B}
+.proj-chart-cap{font-size:12.5px;color:var(--gray-text);margin:2px 4px 8px}
+.proj-eye{margin-bottom:14px}
+.proj-eye-title{font-size:19px;font-weight:700;color:var(--ink-green)}
+.proj-eye-meta{margin-top:4px;font-size:15px;color:var(--pine-dark);font-weight:600}
+.proj-eye-sub{margin-top:3px;font-size:13.5px;color:var(--gray-text)}
+.proj-eye-note{margin:12px 0 0;font-size:14px;line-height:1.65}
 .proj-actions{display:none;gap:12px;margin-top:16px;flex-wrap:wrap}
 .proj-actions a,.proj-actions button{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:999px;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;font-family:inherit}
 .proj-dl{background:var(--ink-green);color:#fff;border:0}
@@ -264,7 +270,7 @@ footer{border-top:1px solid var(--hairline);padding:48px 24px 64px;background:#f
 <div class="projector" id="projector">
 <p class="eyebrow">Interactive</p>
 <h2>Where does your child's lane end at 18?</h2>
-<p class="proj-intro">One measurement is enough to start. Enter your child's age and latest axial length, pick the reference population that matches your child — the CREAM consortium's European/Australian database (sex-specific curves, ages 6–18) or the Chinese reference (sex-combined, ages 3–18) — and we pinpoint their exact percentile lane, project it to age 18 (axial length and estimated refraction), and grade the risk. Children who hold their lane tend to land where the lane ends; children who climb lanes are the ones to act on early.</p>
+<p class="proj-intro">One measurement per eye is enough to start. Enter your child's age and the latest axial length for each eye (from any biometry report), pick the reference population that matches your child — the CREAM consortium's European/Australian database (sex-specific curves, ages 6–18) or the Chinese reference (sex-combined, ages 3–18) — and we pinpoint each eye's exact percentile lane, project it to age 18 (axial length and estimated refraction), and grade the risk. Same report format as the 6S tracker: this page does the first-measurement estimate; the tracker does the long-term management.</p>
 <div class="proj-grid">
 <div class="proj-controls">
 <label for="projPop">Reference population</label>
@@ -280,12 +286,18 @@ footer{border-top:1px solid var(--hairline);padding:48px 24px 64px;background:#f
 <p class="proj-hint" id="projSexHint">CREAM curves are sex-specific.</p>
 <label for="projAge">Age (years)</label>
 <input id="projAge" type="number" min="6" max="17.9" step="0.1" value="8">
-<label for="projAL">Axial length (mm)</label>
-<input id="projAL" type="number" min="20" max="28" step="0.01" value="23.40">
-<p class="proj-hint">From the latest biometry report — either eye.</p>
+<label for="projALL">Left eye (mm)</label>
+<input id="projALL" type="number" min="20" max="28" step="0.01" value="23.40">
+<label for="projALR">Right eye (mm) — optional</label>
+<input id="projALR" type="number" min="20" max="28" step="0.01" placeholder="add it if you have it">
 <button class="proj-btn" id="projGo" type="button">Plot &amp; project to 18</button>
 </div>
-<div class="proj-chart"><canvas id="projCanvas" width="1400" height="980"></canvas></div>
+<div class="proj-chart">
+<p class="proj-chart-cap">Axial length — percentile lanes and projection to 18</p>
+<canvas id="projCanvas" width="1400" height="980"></canvas>
+<p class="proj-chart-cap" style="margin-top:16px">Estimated refraction at 18 — from axial length, rule of thumb</p>
+<canvas id="projCanvas2" width="1400" height="760"></canvas>
+</div>
 </div>
 <div class="proj-result" id="projResult"></div>
 <div class="proj-actions" id="projActions">
@@ -395,14 +407,15 @@ chinese:{start:3,vmax:28.5,label:'Chinese reference (boys & girls, ages 3–18)'
 [22.84,23.15,23.46,23.76,24.06,24.35,24.65,24.96,25.25,25.54,25.81,26.10,26.36,26.63,26.88,27.14],
 [23.01,23.34,23.66,23.98,24.31,24.61,24.95,25.27,25.58,25.89,26.19,26.49,26.77,27.04,27.31,27.56]]}
 };
-var DS=DATASETS.cream_male; // compute() 会按选择重指
+var DS=DATASETS.cream_male;
+
 function valAt(arr,age){
   var s=DS.start, n=arr.length-1;
   if(age<=s)return arr[0]; if(age>=s+n)return arr[n];
   var i=Math.floor(age)-s, t=age-Math.floor(age);
   return arr[i]+(arr[i+1]-arr[i])*t;
 }
-function fracAt(L,age){ // 0=P5 ... 1=P95 之间的相对位置
+function fracAt(L,age){
   var vs=DS.curves.map(function(c){return valAt(c,age);});
   if(L<=vs[0])return 0; if(L>=vs[6])return 1;
   for(var k=0;k<6;k++){ if(L>=vs[k]&&L<=vs[k+1]) return (k+(L-vs[k])/(vs[k+1]-vs[k]))/6; }
@@ -416,7 +429,7 @@ function pctOf(f){
   var g=f*6,k=Math.min(5,Math.floor(g)),t=g-k;
   return PCTS[k]+t*(PCTS[k+1]-PCTS[k]);
 }
-// 屈光度估算：24mm 正视基线，每超 1mm ≈ −2.5~−3.0D（经验法则，给区间）
+// 屈光度估算：24mm 正视基线，每超 1mm ≈ −2.5~−3.0D
 function refrEstimate(pred){
   if(pred<23.8)return {text:'likely plano or mildly hyperopic',short:'plano / mild hyperopia'};
   var lo=(pred-24.0)*2.5, hi=(pred-24.0)*3.0;
@@ -424,51 +437,111 @@ function refrEstimate(pred){
   return {text:'about −'+lo.toFixed(1)+' D to −'+hi.toFixed(1)+' D',
           short:'−'+lo.toFixed(1)+' to −'+hi.toFixed(1)+' D'};
 }
-var PINE='#2E9C8C',INK='#14332D',GRAY='#9AA0A6',RED='#C0392B';
-function drawChart(ctx,W,H,age,L,f,pred){
-  var padL=64,padR=56,padT=30,padB=52;
+function seMid(mm){return -(mm-24.0)*2.75;} // SE 图中值
+var PINE='#2E9C8C',INK='#14332D',RED='#C0392B',BLUE='#2563EB',TEAL='#2E9C8C';
+function eyeColor(side){return side==='L'?BLUE:TEAL;} // 左眼蓝、右眼青，与 App 一致
+
+function drawBase(ctx,W,H){
+  var padL=104,padR=56,padT=30,padB=64;
   var x0=padL,x1=W-padR,y0=padT,y1=H-padB;
   var vmin=20.5,vmax=DS.vmax,xs0=DS.start;
   function X(a){return x0+(a-xs0)/(18-xs0)*(x1-x0);}
   function Y(v){return y1-(v-vmin)/(vmax-vmin)*(y1-y0);}
-  ctx.fillStyle='#F5F5F7';ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
   ctx.strokeStyle='rgba(0,0,0,.07)';ctx.lineWidth=1;
   ctx.font='24px Inter,sans-serif';ctx.fillStyle='#6E6E73';ctx.textAlign='center';
-  for(var a=Math.ceil(xs0/3)*3;a<=18;a+=3){ctx.beginPath();ctx.moveTo(X(a),y0);ctx.lineTo(X(a),y1);ctx.stroke();ctx.fillText(a,X(a),y1+34);}
+  for(var a=Math.ceil(xs0/3)*3;a<=18;a+=3){ctx.beginPath();ctx.moveTo(X(a),y0);ctx.lineTo(X(a),y1);ctx.stroke();ctx.fillText(a,X(a),y1+30);}
   ctx.textAlign='right';
-  for(var v=21;v<=Math.floor(vmax);v++){ctx.beginPath();ctx.moveTo(x0,Y(v));ctx.lineTo(x1,Y(v));ctx.stroke();ctx.fillText(v+'.0',x0-12,Y(v)+8);}
-  ctx.save();ctx.translate(22,(y0+y1)/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.fillText('Axial length (mm)',0,0);ctx.restore();
-  ctx.textAlign='center';ctx.fillText('Age (years)',(x0+x1)/2,H-10);
-  // 百分位曲线
+  for(var v=21;v<=Math.floor(vmax);v++){ctx.beginPath();ctx.moveTo(x0,Y(v));ctx.lineTo(x1,Y(v));ctx.stroke();ctx.fillText(v+'.0',x0-14,Y(v)+8);}
+  ctx.save();ctx.translate(28,(y0+y1)/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.fillText('Axial length (mm)',0,0);ctx.restore();
+  ctx.textAlign='center';ctx.fillText('Age (years)',(x0+x1)/2,H-8);
   for(var c=0;c<7;c++){
     ctx.beginPath();
     var cc=DS.curves[c], n=cc.length-1;
-    for(var j=0;j<=n;j++){var px=X(DS.start+j),py=Y(cc[j]); j?ctx.lineTo(px,py):ctx.moveTo(px,py);}
-    ctx.strokeStyle=(c===3)?'#7A7E85':'#B9BDC3';ctx.lineWidth=(c===3)?4:2.4;ctx.stroke();
+    for(var j=0;j<=n;j++){var px=X(xs0+j),py=Y(cc[j]); j?ctx.lineTo(px,py):ctx.moveTo(px,py);}
+    ctx.strokeStyle=(c===3)?'#7A7E85':'#C4C9CF';ctx.lineWidth=(c===3)?4:2.2;ctx.stroke();
     ctx.fillStyle='#9AA0A6';ctx.font='20px Inter,sans-serif';ctx.textAlign='left';
     ctx.fillText('P'+PCTS[c],x1+8,Y(cc[n])+7);
   }
-  // 投影车道（同龄到18）
-  if(f!=null){
-    ctx.beginPath();
-    for(var a2=age;a2<=18.001;a2+=0.25){var qx=X(a2),qy=Y(laneVal(f,a2)); a2===age?ctx.moveTo(qx,qy):ctx.lineTo(qx,qy);}
-    ctx.setLineDash([10,8]);ctx.strokeStyle=PINE;ctx.lineWidth=4;ctx.stroke();ctx.setLineDash([]);
-  }
-  // 当前点
-  ctx.beginPath();ctx.arc(X(age),Y(L),11,0,7);ctx.fillStyle=PINE;ctx.fill();
-  ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
-  // 18岁预测点
-  if(pred!=null){
-    ctx.beginPath();ctx.arc(X(18),Y(pred),11,0,7);ctx.fillStyle=pred>=26?RED:PINE;ctx.fill();
-    ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
-    ctx.font='600 26px Inter,sans-serif';ctx.fillStyle=pred>=26?RED:INK;ctx.textAlign='right';
-    ctx.fillText('~'+pred.toFixed(2)+' mm at 18',X(18)-18,Y(pred)-16);
-  }
-  ctx.font='600 24px Inter,sans-serif';ctx.fillStyle=INK;ctx.textAlign='left';
-  var lx=X(age)+18,ly=Y(L)-14; if(lx>X(14)){lx=X(age)-18;ctx.textAlign='right';}
-  ctx.fillText(L.toFixed(2)+' mm · age '+age,lx,ly);
+  return {X:X,Y:Y};
 }
-var canvas=document.getElementById('projCanvas');
+function drawChart(ctx,W,H,age,eyes){
+  var g=drawBase(ctx,W,H);
+  eyes.forEach(function(e){
+    var col=eyeColor(e.side);
+    ctx.beginPath();
+    for(var a=age;a<=18.001;a+=0.25){var qx=g.X(a),qy=g.Y(laneVal(e.f,a)); a===age?ctx.moveTo(qx,qy):ctx.lineTo(qx,qy);}
+    ctx.setLineDash([10,8]);ctx.strokeStyle=col;ctx.lineWidth=4;ctx.stroke();ctx.setLineDash([]);
+    ctx.beginPath();ctx.arc(g.X(age),g.Y(e.L),11,0,7);ctx.fillStyle=col;ctx.fill();
+    ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
+    ctx.beginPath();ctx.arc(g.X(18),g.Y(e.pred),11,0,7);ctx.fillStyle=e.pred>=26?RED:col;ctx.fill();
+    ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
+  });
+  var ends=eyes.slice().sort(function(a,b){return b.pred-a.pred;});
+  var prevY=-Infinity;
+  ends.forEach(function(e){
+    var ty=g.Y(e.pred)-16;
+    if(ty<prevY+32)ty=prevY+32;
+    prevY=ty;
+    ctx.font='600 26px Inter,sans-serif';ctx.textAlign='right';ctx.fillStyle=e.pred>=26?RED:INK;
+    ctx.lineWidth=6;ctx.strokeStyle='rgba(255,255,255,.9)';ctx.strokeText('~'+e.pred.toFixed(2)+' mm at 18 \u00B7 '+(e.side==='L'?'L':'R'),g.X(18)-20,ty);
+    ctx.fillText('~'+e.pred.toFixed(2)+' mm at 18 \u00B7 '+(e.side==='L'?'L':'R'),g.X(18)-20,ty);
+  });
+  var starts=eyes.slice().sort(function(a,b){return b.L-a.L;});
+  var prevS=-Infinity;
+  starts.forEach(function(e){
+    var ty=g.Y(e.L)+38;
+    if(ty<prevS+30)ty=prevS+30;
+    prevS=ty;
+    ctx.font='600 24px Inter,sans-serif';ctx.textAlign='left';ctx.fillStyle=INK;
+    var lx=g.X(age)+18;
+    if(lx>g.X(14)){ctx.textAlign='right';lx=g.X(age)-18;}
+    ctx.lineWidth=6;ctx.strokeStyle='rgba(255,255,255,.9)';ctx.strokeText(e.L.toFixed(2)+' mm \u00B7 '+(e.side==='L'?'left':'right')+' eye',lx,ty);
+    ctx.fillText(e.L.toFixed(2)+' mm \u00B7 '+(e.side==='L'?'left':'right')+' eye',lx,ty);
+  });
+}
+function drawSE(ctx,W,H,age,eyes){
+  var padL=104,padR=56,padT=30,padB=64;
+  var x0=padL,x1=W-padR,y0=padT,y1=H-padB;
+  var xs0=DS.start;
+  var seMax=-Infinity,seMin=Infinity;
+  eyes.forEach(function(e){seMax=Math.max(seMax,seMid(e.L));seMin=Math.min(seMin,seMid(e.pred));});
+  var smax=Math.max(1.5,Math.ceil((seMax+0.4)*2)/2),smin=Math.min(-8.5,Math.floor((seMin-0.4)*2)/2);
+  function X(a){return x0+(a-xs0)/(18-xs0)*(x1-x0);}
+  function Y(d){return y0+(smax-d)/(smax-smin)*(y1-y0);}
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(0,0,0,.07)';ctx.lineWidth=1;
+  ctx.font='24px Inter,sans-serif';ctx.fillStyle='#6E6E73';
+  for(var a=Math.ceil(xs0/3)*3;a<=18;a+=3){ctx.beginPath();ctx.moveTo(X(a),y0);ctx.lineTo(X(a),y1);ctx.stroke();ctx.textAlign='center';ctx.fillText(a,X(a),y1+30);}
+  for(var d=Math.floor(smax);d>=Math.ceil(smin);d--){ctx.beginPath();ctx.moveTo(x0,Y(d));ctx.lineTo(x1,Y(d));ctx.stroke();ctx.textAlign='right';ctx.fillText((d>0?'+':(d<0?'\u2212':''))+Math.abs(d)+'.0',x0-14,Y(d)+8);}
+  ctx.save();ctx.translate(28,(y0+y1)/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.fillText('Estimated refraction (D)',0,0);ctx.restore();
+  ctx.textAlign='center';ctx.fillText('Age (years)',(x0+x1)/2,H-8);
+  ctx.strokeStyle='rgba(192,57,43,.35)';ctx.setLineDash([4,6]);ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(x0,Y(0));ctx.lineTo(x1,Y(0));ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x0,Y(-6));ctx.lineTo(x1,Y(-6));ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#C0392B';ctx.textAlign='left';ctx.font='20px Inter,sans-serif';
+  ctx.fillText('Myopia onset (0.00 D)',x0+14,Y(0)-8);
+  ctx.fillText('High myopia (\u22126.00 D)',x0+14,Y(-6)-8);
+  eyes.forEach(function(e){
+    var col=eyeColor(e.side);
+    var se0=seMid(e.L), se1=seMid(e.pred);
+    ctx.beginPath();ctx.moveTo(X(age),Y(se0));ctx.lineTo(X(18),Y(se1));
+    ctx.setLineDash([10,8]);ctx.strokeStyle=col;ctx.lineWidth=4;ctx.stroke();ctx.setLineDash([]);
+    ctx.beginPath();ctx.arc(X(age),Y(se0),10,0,7);ctx.fillStyle=col;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
+    ctx.beginPath();ctx.arc(X(18),Y(se1),10,0,7);ctx.fillStyle=se1<=-6?RED:col;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
+  });
+  var ends=eyes.slice().sort(function(a,b){return seMid(b.pred)-seMid(a.pred);});
+  var prevY=-Infinity;
+  ends.forEach(function(e){
+    var se1=seMid(e.pred);
+    var ty=Y(se1)-14;
+    if(ty<prevY+30)ty=prevY+30;
+    prevY=ty;
+    ctx.font='600 24px Inter,sans-serif';ctx.textAlign='right';ctx.fillStyle=se1<=-6?RED:INK;
+    ctx.lineWidth=6;ctx.strokeStyle='rgba(255,255,255,.9)';ctx.strokeText('~'+se1.toFixed(1)+' D at 18 \u00B7 '+(e.side==='L'?'L':'R'),X(18)-18,ty);
+    ctx.fillText('~'+se1.toFixed(1)+' D at 18 \u00B7 '+(e.side==='L'?'L':'R'),X(18)-18,ty);
+  });
+}
 function pickDataset(){
   var pop=document.getElementById('projPop').value;
   var sex=document.getElementById('projSex').value;
@@ -478,52 +551,98 @@ function pickDataset(){
 function compute(){
   DS=pickDataset();
   var age=parseFloat(document.getElementById('projAge').value);
-  var L=parseFloat(document.getElementById('projAL').value);
+  var Ll=parseFloat(document.getElementById('projALL').value);
+  var Lr=parseFloat(document.getElementById('projALR').value);
   var res=document.getElementById('projResult'),act=document.getElementById('projActions');
-  if(!(age>=DS.start&&age<18)||!(L>=20&&L<=28)){
+  var eyes=[];
+  if(Ll>=20&&Ll<=28)eyes.push({side:'L',L:Ll});
+  if(Lr>=20&&Lr<=28)eyes.push({side:'R',L:Lr});
+  if(!(age>=DS.start&&age<18)||!eyes.length){
     res.style.display='block';act.style.display='none';
-    res.innerHTML='<strong>Check the inputs.</strong> Age '+DS.start+'–17.9 (this reference starts at '+DS.start+'), axial length 20–28 mm.';
+    res.innerHTML='<strong>Check the inputs.</strong> Age '+DS.start+'–17.9, and at least one eye\u2019s axial length (20–28 mm).';
     return;
   }
   age=Math.round(age*10)/10;
-  var f=fracAt(L,age),pred=laneVal(f,18),pc=pctOf(f);
+  eyes.forEach(function(e){
+    e.f=fracAt(e.L,age);e.pred=laneVal(e.f,18);e.pc=pctOf(e.f);
+    e.lane=e.f>=1?'above P95':(e.f<=0?'below P5':'P'+Math.round(e.pc));
+    e.refr=refrEstimate(e.pred);
+    if(e.pred<23.8){e.lvl='LOW';e.cls='low';e.band='low-track lane';}
+    else if(e.pred<24.8){e.lvl='MODERATE';e.cls='moderate';e.band='typical lane — many eyes cross emmetropia near 24 mm';}
+    else if(e.pred<26){e.lvl='ELEVATED';e.cls='elevated';e.band='lane ends in the likely-myopic range without intervention';}
+    else{e.lvl='HIGH';e.cls='high';e.band='lane ends in high-myopia territory (≥26 mm) — worth a professional conversation soon';}
+    e.range=e.f>=1?'Above the reference range':(e.f<=0?'Below the reference range':'Within the reference range');
+  });
   var dpr=window.devicePixelRatio||1;
-  canvas.width=1400*dpr;canvas.height=980*dpr;
-  var ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
-  drawChart(ctx,1400,980,age,L,f,pred);
-  var lane = f>=1?'above P95':(f<=0?'below P5':'about P'+Math.round(pc));
-  var lvl,cls,band;
-  if(pred<23.8){lvl='LOW';cls='low';band='low-track lane';}
-  else if(pred<24.8){lvl='MODERATE';cls='moderate';band='typical lane — many eyes cross emmetropia near 24 mm';}
-  else if(pred<26){lvl='ELEVATED';cls='elevated';band='lane ends in the likely-myopic range without intervention';}
-  else{lvl='HIGH';cls='high';band='lane ends in high-myopia territory (≥26 mm) — worth a professional conversation soon';}
-  var refr=refrEstimate(pred);
+  var c1=document.getElementById('projCanvas');
+  c1.width=1400*dpr;c1.height=980*dpr;
+  var ctx1=c1.getContext('2d');ctx1.scale(dpr,dpr);
+  drawChart(ctx1,1400,980,age,eyes);
+  var c2=document.getElementById('projCanvas2');
+  c2.width=1400*dpr;c2.height=760*dpr;
+  var ctx2=c2.getContext('2d');ctx2.scale(dpr,dpr);
+  drawSE(ctx2,1400,760,age,eyes);
+  var html='';
+  eyes.forEach(function(e){
+    var name=e.side==='L'?'Left eye':'Right eye';
+    html+='<div class="proj-eye"><div class="proj-eye-title">'+name+' · '+e.L.toFixed(2)+' mm</div>'+
+    '<div class="proj-eye-meta">'+e.lane+' <span class="proj-risk proj-risk-'+e.cls+'">'+e.lvl+'</span> · est. '+e.refr.text+' at 18</div>'+
+    '<div class="proj-eye-sub">'+e.range+' — projected <strong>~'+e.pred.toFixed(2)+' mm</strong> at age 18 ('+DS.label+'). '+e.band+'.</div></div>';
+  });
+  html+='<p class="proj-eye-note">This page estimates from the first measurement. A prediction that learns from your child\u2019s own growth series — and alerts you the moment the lane starts climbing — lives in the <a href="https://app.6smyopia.com">free 6S tracker</a>. What changes the lane: outdoor time, light environment, optical defocus, and a measurement every 3 months.</p>';
   res.style.display='block';act.style.display='flex';
-  res.innerHTML='<strong>Today: '+L.toFixed(2)+' mm at age '+age+' — '+lane+'</strong> ('+DS.label+')<span class="proj-risk proj-risk-'+cls+'">'+lvl+'</span><br>'+
-  'If this eye holds its current lane, at age 18 it lands at about <strong>'+pred.toFixed(2)+' mm</strong>, with an estimated refraction of <strong>'+refr.text+'</strong> — '+band+'.<br>'+
-  'What changes the lane: outdoor time, light environment, optical defocus, and tracking every 3 months — the lane is the thing you manage.';
-  window._proj={age:age,L:L,f:f,pred:pred,lane:lane,dsLabel:DS.label,refrShort:refr.short,lvl:lvl};
+  res.innerHTML=html;
+  window._proj={age:age,eyes:eyes,dsLabel:DS.label};
 }
 function exportPNG(){
   var p=window._proj;if(!p)return;
   DS=pickDataset();
-  var W=1200,H=920,c=document.createElement('canvas');c.width=W;c.height=H;
+  var W=1200,H=1720,c=document.createElement('canvas');c.width=W;c.height=H;
   var ctx=c.getContext('2d');
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
-  ctx.fillStyle=INK;ctx.font='700 34px Inter,sans-serif';ctx.textAlign='left';
-  ctx.fillText("My child's axial-length lane — projected to 18",48,64);
-  ctx.fillStyle='#6E6E73';ctx.font='22px Inter,sans-serif';
-  ctx.fillText(p.L.toFixed(2)+' mm at age '+p.age+' ('+p.lane+')  →  ~'+p.pred.toFixed(2)+' mm at 18 · est. '+p.refrShort+' · '+p.lvl,48,102);
-  ctx.save();ctx.translate(48,130);
-  drawChart(ctx,W-96,700,p.age,p.L,p.f,p.pred);
+  ctx.fillStyle=INK;ctx.font='700 44px Inter,sans-serif';ctx.textAlign='left';
+  ctx.fillText('6S Myopia',48,78);
+  ctx.textAlign='right';ctx.fillStyle='#6E6E73';ctx.font='26px Inter,sans-serif';
+  ctx.fillText(p.age+' yrs',W-48,72);
+  ctx.strokeStyle='#E5E5EA';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(48,102);ctx.lineTo(W-48,102);ctx.stroke();
+  ctx.textAlign='left';ctx.fillStyle='#1D1D1F';ctx.font='700 32px Inter,sans-serif';
+  ctx.fillText('Age-18 estimate (percentile projection)',48,158);
+  var y=224;
+  var rcol={low:'#1F7A68',moderate:'#9A6A0A',elevated:'#B25A09',high:'#C0392B'};
+  p.eyes.forEach(function(e){
+    var name=e.side==='L'?'Left eye':'Right eye';
+    ctx.fillStyle='#1D1D1F';ctx.font='700 42px Inter,sans-serif';
+    ctx.fillText(name+'  ·  '+e.L.toFixed(2)+' mm',48,y);
+    ctx.font='600 27px Inter,sans-serif';ctx.fillStyle=rcol[e.cls];
+    ctx.fillText(e.lane+'  ·  '+e.lvl+'  ·  '+e.refr.short,48,y+42);
+    ctx.fillStyle='#6E6E73';ctx.font='22px Inter,sans-serif';
+    ctx.fillText(e.range+'  →  ~'+e.pred.toFixed(2)+' mm at 18 ('+p.dsLabel+')',48,y+76);
+    y+=134;
+  });
+  ctx.fillStyle='#1D1D1F';ctx.font='700 25px Inter,sans-serif';
+  ctx.fillText('Axial length projection to 18',48,y+18);
+  ctx.save();ctx.translate(48,y+38);drawChart(ctx,W-96,540,p.age,p.eyes);ctx.restore();
+  y+=618;
+  ctx.fillStyle='#1D1D1F';ctx.font='700 25px Inter,sans-serif';
+  ctx.fillText('Estimated refraction to 18 (rule of thumb)',48,y+18);
+  ctx.save();ctx.translate(48,y+38);drawSE(ctx,W-96,440,p.age,p.eyes);ctx.restore();
+  // 水印
+  ctx.save();ctx.globalAlpha=0.05;ctx.fillStyle=PINE;ctx.font='700 64px Inter,sans-serif';
+  ctx.translate(W/2,H/2);ctx.rotate(-0.5);ctx.textAlign='center';
+  for(var i=-4;i<=4;i++){ctx.fillText('6S MYOPIA · TRACK YOURS FREE',0,i*180);}
   ctx.restore();
-  ctx.fillStyle='#9AA0A6';ctx.font='18px Inter,sans-serif';ctx.textAlign='center';
-  ctx.fillText('Percentile method · Reference: '+p.dsLabel+' · educational projection, not medical advice · 6smyopia.com',W/2,H-24);
-  var a=document.createElement('a');a.download='axial-length-projection.png';a.href=c.toDataURL('image/png');a.click();
+  // footer
+  ctx.strokeStyle='#E5E5EA';ctx.beginPath();ctx.moveTo(48,H-92);ctx.lineTo(W-48,H-92);ctx.stroke();
+  ctx.fillStyle=PINE;ctx.font='700 30px Inter,sans-serif';ctx.textAlign='left';
+  ctx.fillText('6S Myopia',48,H-40);
+  ctx.fillStyle='#6E6E73';ctx.font='23px Inter,sans-serif';ctx.textAlign='right';
+  ctx.fillText('Track yours free at 6smyopia.com',W-48,H-42);
+  var a=document.createElement('a');a.download='6S-myopia-prediction-'+p.age+'y.png';a.href=c.toDataURL('image/png');a.click();
 }
 function copyText(){
   var p=window._proj;if(!p)return;
-  var t="My child's axial length: "+p.L.toFixed(2)+" mm at age "+p.age+" ("+p.lane+"). Projection to 18: ~"+p.pred.toFixed(2)+" mm, est. refraction "+p.refrShort+" — risk: "+p.lvl+". Chart your own child: https://www.6smyopia.com/data/axial-growth-rate-by-age.html#projector";
+  var parts=p.eyes.map(function(e){return (e.side==='L'?'Left':'Right')+' eye '+e.L.toFixed(2)+' mm ('+e.lane+') → ~'+e.pred.toFixed(2)+' mm at 18, est. '+e.refr.short+', '+e.lvl;});
+  var t="My child's axial-length projection at age "+p.age+": "+parts.join('; ')+". Chart your own child free: https://www.6smyopia.com/tools/axial-length-projector.html";
   (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){
     document.getElementById('projCopy').textContent='Copied!';
   },function(){
