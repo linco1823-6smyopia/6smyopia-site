@@ -186,7 +186,8 @@ footer{border-top:1px solid var(--hairline);padding:48px 24px 64px;background:#f
 .proj-risk-elevated{background:#FDE8D9;color:#B25A09}
 .proj-risk-high{background:#FADBD8;color:#C0392B}
 .proj-chart-cap{font-size:12.5px;color:var(--gray-text);margin:2px 4px 8px}
-.proj-eye{margin-bottom:14px}
+.proj-eye{margin-bottom:14px}.proj-eyes{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:640px){.proj-eyes{grid-template-columns:1fr}}
 .proj-eye-title{font-size:19px;font-weight:700;color:var(--ink-green)}
 .proj-eye-meta{margin-top:4px;font-size:15px;color:var(--pine-dark);font-weight:600}
 .proj-eye-sub{margin-top:3px;font-size:13.5px;color:var(--gray-text)}
@@ -270,7 +271,7 @@ footer{border-top:1px solid var(--hairline);padding:48px 24px 64px;background:#f
 <div class="projector" id="projector">
 <p class="eyebrow">Interactive</p>
 <h2>Where does your child's lane end at 18?</h2>
-<p class="proj-intro">One measurement per eye is enough to start. Enter your child's age and the latest axial length for each eye (from any biometry report), pick the reference population that matches your child — the CREAM consortium's European/Australian database (sex-specific curves, ages 6–18) or the Chinese reference (sex-combined, ages 3–18) — and we pinpoint each eye's exact percentile lane, project it to age 18 (axial length and estimated refraction), and grade the risk. Same report format as the 6S tracker: this page does the first-measurement estimate; the tracker does the long-term management.</p>
+<p class="proj-intro">One measurement per eye is enough to start. Enter your child's age and the latest axial length for each eye (from any biometry report — plus the measured refraction, if the report has it), pick the reference population that matches your child — the CREAM consortium's European/Australian database (sex-specific curves, ages 6–18) or the Chinese reference (sex-combined, ages 3–18) — and we pinpoint each eye's exact percentile lane, project it to age 18 (axial length and estimated refraction), and grade the risk. Same report format as the 6S tracker: this page does the first-measurement estimate; the tracker does the long-term management.</p>
 <div class="proj-grid">
 <div class="proj-controls">
 <label for="projPop">Reference population</label>
@@ -286,16 +287,20 @@ footer{border-top:1px solid var(--hairline);padding:48px 24px 64px;background:#f
 <p class="proj-hint" id="projSexHint">CREAM curves are sex-specific.</p>
 <label for="projAge">Age (years)</label>
 <input id="projAge" type="number" min="6" max="17.9" step="0.1" value="8">
-<label for="projALL">Left eye (mm)</label>
+<label for="projALL">Left eye axial length (mm)</label>
 <input id="projALL" type="number" min="20" max="28" step="0.01" value="23.40">
-<label for="projALR">Right eye (mm) — optional</label>
+<label for="projSEL">Left refraction (D) — optional</label>
+<input id="projSEL" type="number" min="-15" max="6" step="0.25" placeholder="from the same report, e.g. −1.25">
+<label for="projALR">Right eye axial length (mm) — optional</label>
 <input id="projALR" type="number" min="20" max="28" step="0.01" placeholder="add it if you have it">
+<label for="projSER">Right refraction (D) — optional</label>
+<input id="projSER" type="number" min="-15" max="6" step="0.25" placeholder="from the same report">
 <button class="proj-btn" id="projGo" type="button">Plot &amp; project to 18</button>
 </div>
 <div class="proj-chart">
 <p class="proj-chart-cap">Axial length — percentile lanes and projection to 18</p>
 <canvas id="projCanvas" width="1400" height="980"></canvas>
-<p class="proj-chart-cap" style="margin-top:16px">Estimated refraction at 18 — from axial length, rule of thumb</p>
+<p class="proj-chart-cap" style="margin-top:16px">Refraction projection to 18 — starts from your measured value if entered, else the axial-length rule of thumb</p>
 <canvas id="projCanvas2" width="1400" height="760"></canvas>
 </div>
 </div>
@@ -304,7 +309,7 @@ footer{border-top:1px solid var(--hairline);padding:48px 24px 64px;background:#f
 <button class="proj-dl" id="projDl" type="button">Download share image (PNG)</button>
 <button class="proj-copy" id="projCopy" type="button">Copy share text</button>
 </div>
-<p class="proj-note">Reference data, two options: (1) sex-specific axial-length percentiles for European/Australian children aged 6–21, from the CREAM (Consortium for Refractive Error and Myopia) population database; (2) sex-combined percentile curves for Chinese children aged 3–18. Chinese eyes run longer on average — pick the population your child belongs to for the most meaningful lane. Method note: the projection assumes the eye holds its current percentile lane to age 18 — a simplification used for orientation, not a clinical prediction. The refraction estimate applies the rule of thumb of −2.5 to −3.0 D per mm beyond a 24 mm emmetropic baseline; actual refraction depends on corneal and lens power, which axial length alone cannot see; growth spurts and interventions also move the outcome. Axial length around 26 mm and beyond is the range where high-myopia complications climb steeply. Educational tool, not medical advice.</p>
+<p class="proj-note">Reference data, two options: (1) sex-specific axial-length percentiles for European/Australian children aged 6–21, from the CREAM (Consortium for Refractive Error and Myopia) population database; (2) sex-combined percentile curves for Chinese children aged 3–18. Chinese eyes run longer on average — pick the population your child belongs to for the most meaningful lane. Method note: the projection assumes the eye holds its current percentile lane to age 18 — a simplification used for orientation, not a clinical prediction. The refraction estimate applies the rule of thumb of −2.5 to −3.0 D per mm beyond a 24 mm emmetropic baseline; actual refraction depends on corneal and lens power, which axial length alone cannot see; growth spurts and interventions also move the outcome. If you also enter the measured refraction from the same visit, the refraction projection starts from that number instead of the axial-length-only estimate. Axial length around 26 mm and beyond is the range where high-myopia complications climb steeply. Educational tool, not medical advice.</p>
 <p class="proj-note">Standalone version, easy to bookmark and share: <a href="/tools/axial-length-projector.html">6smyopia.com/tools/axial-length-projector.html</a> — same tool, nothing else on the page.</p>
 </div>
 <div class="cta-band"><h2>Plot your child against these bands.</h2><p>The free 6S tracker does the rate math and the percentile anchoring for you.</p><div class="cta-links"><a class="chevron" href="https://app.6smyopia.com">Start tracking free <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a><a class="chevron" href="/qa/normal-axial-length-7-year-old.html">Normal axial length at age 7 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a></div></div><p class="context-note" style="margin-top:28px">Evidence base for this page (axial growth reference values): <a href="/research/evidence-library.html#ref-3">#3</a> · <a href="/research/evidence-library.html#ref-26">#26</a> · <a href="/research/evidence-library.html#ref-34">#34</a> — full citations and DOI links in our <a href="/research/evidence-library.html">Evidence Library</a>.</p>
@@ -438,6 +443,9 @@ function refrEstimate(pred){
           short:'−'+lo.toFixed(1)+' to −'+hi.toFixed(1)+' D'};
 }
 function seMid(mm){return -(mm-24.0)*2.75;} // SE 图中值
+function fmtD(v,d){var s=Math.abs(v).toFixed(d===undefined?1:d);return (v<0?'\u2212'+s:(v>0?'+'+s:s))+' D';}
+function seStart(e){return e.seNow!=null?e.seNow:seMid(e.L);}      // 有实测用实测，否则眼轴估算
+function seEnd(e){return e.seNow!=null?e.seNow+(seMid(e.pred)-seMid(e.L)):seMid(e.pred);} // 实测起点+眼轴增量
 var PINE='#2E9C8C',INK='#14332D',RED='#C0392B',BLUE='#2563EB',TEAL='#2E9C8C';
 function eyeColor(side){return side==='L'?BLUE:TEAL;} // 左眼蓝、右眼青，与 App 一致
 
@@ -505,7 +513,7 @@ function drawSE(ctx,W,H,age,eyes){
   var x0=padL,x1=W-padR,y0=padT,y1=H-padB;
   var xs0=DS.start;
   var seMax=-Infinity,seMin=Infinity;
-  eyes.forEach(function(e){seMax=Math.max(seMax,seMid(e.L));seMin=Math.min(seMin,seMid(e.pred));});
+  eyes.forEach(function(e){seMax=Math.max(seMax,seStart(e));seMin=Math.min(seMin,seEnd(e));});
   var smax=Math.max(1.5,Math.ceil((seMax+0.4)*2)/2),smin=Math.min(-8.5,Math.floor((seMin-0.4)*2)/2);
   function X(a){return x0+(a-xs0)/(18-xs0)*(x1-x0);}
   function Y(d){return y0+(smax-d)/(smax-smin)*(y1-y0);}
@@ -524,16 +532,27 @@ function drawSE(ctx,W,H,age,eyes){
   ctx.fillText('High myopia (\u22126.00 D)',x0+14,Y(-6)-8);
   eyes.forEach(function(e){
     var col=eyeColor(e.side);
-    var se0=seMid(e.L), se1=seMid(e.pred);
+    var se0=seStart(e), se1=seEnd(e);
     ctx.beginPath();ctx.moveTo(X(age),Y(se0));ctx.lineTo(X(18),Y(se1));
     ctx.setLineDash([10,8]);ctx.strokeStyle=col;ctx.lineWidth=4;ctx.stroke();ctx.setLineDash([]);
     ctx.beginPath();ctx.arc(X(age),Y(se0),10,0,7);ctx.fillStyle=col;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
     ctx.beginPath();ctx.arc(X(18),Y(se1),10,0,7);ctx.fillStyle=se1<=-6?RED:col;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
   });
-  var ends=eyes.slice().sort(function(a,b){return seMid(b.pred)-seMid(a.pred);});
+  var mstarts=eyes.filter(function(e){return e.seNow!=null;}).sort(function(a,b){return seStart(b)-seStart(a);});
+  var prevM=-Infinity;
+  mstarts.forEach(function(e){
+    var ty=Y(seStart(e))-14;
+    if(ty<prevM+26)ty=prevM+26;
+    prevM=ty;
+    ctx.font='600 20px Inter,sans-serif';ctx.textAlign='left';ctx.fillStyle=INK;
+    ctx.lineWidth=5;ctx.strokeStyle='rgba(255,255,255,.9)';
+    var lbl=fmtD(e.seNow,2)+' now \u00B7 '+(e.side==='L'?'L':'R');
+    ctx.strokeText(lbl,X(age)+16,ty);ctx.fillText(lbl,X(age)+16,ty);
+  });
+  var ends=eyes.slice().sort(function(a,b){return seEnd(b)-seEnd(a);});
   var prevY=-Infinity;
   ends.forEach(function(e){
-    var se1=seMid(e.pred);
+    var se1=seEnd(e);
     var ty=Y(se1)-14;
     if(ty<prevY+30)ty=prevY+30;
     prevY=ty;
@@ -553,10 +572,12 @@ function compute(){
   var age=parseFloat(document.getElementById('projAge').value);
   var Ll=parseFloat(document.getElementById('projALL').value);
   var Lr=parseFloat(document.getElementById('projALR').value);
+  var seLv=parseFloat(document.getElementById('projSEL').value);
+  var seRv=parseFloat(document.getElementById('projSER').value);
   var res=document.getElementById('projResult'),act=document.getElementById('projActions');
   var eyes=[];
-  if(Ll>=20&&Ll<=28)eyes.push({side:'L',L:Ll});
-  if(Lr>=20&&Lr<=28)eyes.push({side:'R',L:Lr});
+  if(Ll>=20&&Ll<=28)eyes.push({side:'L',L:Ll,seNow:(seLv>=-15&&seLv<=6)?seLv:null});
+  if(Lr>=20&&Lr<=28)eyes.push({side:'R',L:Lr,seNow:(seRv>=-15&&seRv<=6)?seRv:null});
   if(!(age>=DS.start&&age<18)||!eyes.length){
     res.style.display='block';act.style.display='none';
     res.innerHTML='<strong>Check the inputs.</strong> Age '+DS.start+'–17.9, and at least one eye\u2019s axial length (20–28 mm).';
@@ -567,6 +588,11 @@ function compute(){
     e.f=fracAt(e.L,age);e.pred=laneVal(e.f,18);e.pc=pctOf(e.f);
     e.lane=e.f>=1?'above P95':(e.f<=0?'below P5':'P'+Math.round(e.pc));
     e.refr=refrEstimate(e.pred);
+    if(e.seNow!=null){
+      var gLo=(e.pred-e.L)*2.5,gHi=(e.pred-e.L)*3.0;
+      e.refr={text:'about '+fmtD(e.seNow-gHi,1)+' to '+fmtD(e.seNow-gLo,1),
+              short:fmtD(e.seNow-gHi,1)+' to '+fmtD(e.seNow-gLo,1)};
+    }
     if(e.pred<23.8){e.lvl='LOW';e.cls='low';e.band='low-track lane';}
     else if(e.pred<24.8){e.lvl='MODERATE';e.cls='moderate';e.band='typical lane — many eyes cross emmetropia near 24 mm';}
     else if(e.pred<26){e.lvl='ELEVATED';e.cls='elevated';e.band='lane ends in the likely-myopic range without intervention';}
@@ -582,14 +608,14 @@ function compute(){
   c2.width=1400*dpr;c2.height=760*dpr;
   var ctx2=c2.getContext('2d');ctx2.scale(dpr,dpr);
   drawSE(ctx2,1400,760,age,eyes);
-  var html='';
-  eyes.forEach(function(e){
+  var html='<div class="proj-eyes">';
+  eyes.slice().sort(function(a,b){return a.side==='R'?-1:(b.side==='R'?1:0);}).forEach(function(e){
     var name=e.side==='L'?'Left eye':'Right eye';
     html+='<div class="proj-eye"><div class="proj-eye-title">'+name+' · '+e.L.toFixed(2)+' mm</div>'+
     '<div class="proj-eye-meta">'+e.lane+' <span class="proj-risk proj-risk-'+e.cls+'">'+e.lvl+'</span> · est. '+e.refr.text+' at 18</div>'+
-    '<div class="proj-eye-sub">'+e.range+' — projected <strong>~'+e.pred.toFixed(2)+' mm</strong> at age 18 ('+DS.label+'). '+e.band+'.</div></div>';
+    '<div class="proj-eye-sub">'+(e.seNow!=null?('Measured <strong>'+fmtD(e.seNow,2)+'</strong> now. '):'')+e.range+' — projected <strong>~'+e.pred.toFixed(2)+' mm</strong> at age 18 ('+DS.label+'). '+e.band+'.</div></div>';
   });
-  html+='<p class="proj-eye-note">This page estimates from the first measurement. A prediction that learns from your child\u2019s own growth series — and alerts you the moment the lane starts climbing — lives in the <a href="https://app.6smyopia.com">free 6S tracker</a>. What changes the lane: outdoor time, light environment, optical defocus, and a measurement every 3 months.</p>';
+  html+='</div><p class="proj-eye-note">This page estimates from the first measurement. A prediction that learns from your child\u2019s own growth series — and alerts you the moment the lane starts climbing — lives in the <a href="https://app.6smyopia.com">free 6S tracker</a>. What changes the lane: outdoor time, light environment, optical defocus, and a measurement every 3 months.</p>';
   res.style.display='block';act.style.display='flex';
   res.innerHTML=html;
   window._proj={age:age,eyes:eyes,dsLabel:DS.label};
@@ -597,7 +623,7 @@ function compute(){
 function exportPNG(){
   var p=window._proj;if(!p)return;
   DS=pickDataset();
-  var W=1200,H=1720,c=document.createElement('canvas');c.width=W;c.height=H;
+  var W=1200,H=1900,c=document.createElement('canvas');c.width=W;c.height=H;
   var ctx=c.getContext('2d');
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
   ctx.fillStyle=INK;ctx.font='700 44px Inter,sans-serif';ctx.textAlign='left';
@@ -607,24 +633,43 @@ function exportPNG(){
   ctx.strokeStyle='#E5E5EA';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(48,102);ctx.lineTo(W-48,102);ctx.stroke();
   ctx.textAlign='left';ctx.fillStyle='#1D1D1F';ctx.font='700 32px Inter,sans-serif';
   ctx.fillText('Age-18 estimate (percentile projection)',48,158);
-  var y=224;
   var rcol={low:'#1F7A68',moderate:'#9A6A0A',elevated:'#B25A09',high:'#C0392B'};
-  p.eyes.forEach(function(e){
-    var name=e.side==='L'?'Left eye':'Right eye';
-    ctx.fillStyle='#1D1D1F';ctx.font='700 42px Inter,sans-serif';
-    ctx.fillText(name+'  ·  '+e.L.toFixed(2)+' mm',48,y);
+  var disp=p.eyes.slice().sort(function(a,b){return a.side==='R'?-1:(b.side==='R'?1:0);}); // 右眼在前，与 App 报告一致
+  var colX=[48,W/2+28];
+  var y=214;
+  ctx.fillStyle='#6E6E73';ctx.font='700 22px Inter,sans-serif';
+  ctx.fillText('AXIAL LENGTH — NOW → AGE 18',48,y);y+=48;
+  disp.forEach(function(e,i){
+    var x=colX[i],name=e.side==='L'?'Left eye':'Right eye';
+    ctx.fillStyle='#1D1D1F';ctx.font='700 44px Inter,sans-serif';
+    ctx.fillText(name+' · '+e.L.toFixed(2)+' mm',x,y);
     ctx.font='600 27px Inter,sans-serif';ctx.fillStyle=rcol[e.cls];
-    ctx.fillText(e.lane+'  ·  '+e.lvl+'  ·  '+e.refr.short,48,y+42);
+    ctx.fillText(e.lane+' · '+e.lvl,x,y+44);
     ctx.fillStyle='#6E6E73';ctx.font='22px Inter,sans-serif';
-    ctx.fillText(e.range+'  →  ~'+e.pred.toFixed(2)+' mm at 18 ('+p.dsLabel+')',48,y+76);
-    y+=134;
+    ctx.fillText(e.range,x,y+76);
+    ctx.fillText('→ ~'+e.pred.toFixed(2)+' mm at 18',x,y+106);
   });
+  ctx.fillStyle='#9AA0A6';ctx.font='20px Inter,sans-serif';
+  ctx.fillText('Reference population: '+p.dsLabel,48,y+142);
+  y+=182;
+  ctx.fillStyle='#6E6E73';ctx.font='700 22px Inter,sans-serif';
+  ctx.fillText('REFRACTION (SE) — ESTIMATED AT 18',48,y);y+=48;
+  disp.forEach(function(e,i){
+    var x=colX[i],name=e.side==='L'?'Left eye':'Right eye';
+    ctx.fillStyle='#1D1D1F';ctx.font='700 30px Inter,sans-serif';
+    ctx.fillText(name,x,y);
+    ctx.font='700 40px Inter,sans-serif';
+    ctx.fillText(e.refr.short,x,y+46);
+    ctx.fillStyle='#6E6E73';ctx.font='22px Inter,sans-serif';
+    ctx.fillText(e.seNow!=null?('measured '+fmtD(e.seNow,2)+' now'):'estimated from axial length',x,y+84);
+  });
+  y+=148;
   ctx.fillStyle='#1D1D1F';ctx.font='700 25px Inter,sans-serif';
   ctx.fillText('Axial length projection to 18',48,y+18);
   ctx.save();ctx.translate(48,y+38);drawChart(ctx,W-96,540,p.age,p.eyes);ctx.restore();
   y+=618;
   ctx.fillStyle='#1D1D1F';ctx.font='700 25px Inter,sans-serif';
-  ctx.fillText('Estimated refraction to 18 (rule of thumb)',48,y+18);
+  ctx.fillText('Refraction projection to 18',48,y+18);
   ctx.save();ctx.translate(48,y+38);drawSE(ctx,W-96,440,p.age,p.eyes);ctx.restore();
   // 水印
   ctx.save();ctx.globalAlpha=0.05;ctx.fillStyle=PINE;ctx.font='700 64px Inter,sans-serif';
