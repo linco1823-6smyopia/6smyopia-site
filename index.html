@@ -118,7 +118,7 @@ h2{font-size:clamp(32px,4.6vw,52px);font-weight:600;letter-spacing:-0.03em;line-
 /* ---------- hero: pure type + email capture ---------- */
 .hero{padding:150px 24px 120px;text-align:center}
 .hero .sub{margin:26px auto 0}
-.hero-form{max-width:480px;margin:48px auto 0;display:flex;gap:14px;align-items:flex-end;text-align:left}
+.hero-form{max-width:480px;margin:36px auto 0;display:flex;gap:14px;align-items:flex-end;text-align:left}
 .hero-form input{
   flex:1;border:none;border-bottom:1.5px solid var(--hairline);
   font:inherit;font-size:16px;padding:12px 2px;background:transparent;color:var(--ink);
@@ -133,6 +133,14 @@ h2{font-size:clamp(32px,4.6vw,52px);font-weight:600;letter-spacing:-0.03em;line-
 .hero-form button svg{transition:transform .25s}
 .hero-form button:hover svg{transform:translateX(4px)}
 .hero-note{margin-top:16px;font-size:12.5px;color:var(--gray-text)}
+.hero-ctas{margin-top:40px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;padding:15px 30px;border-radius:999px;font-size:16px;font-weight:600;text-decoration:none;transition:background .2s,border-color .2s}
+.hero-cta.primary{background:var(--pine-dark);color:#fff}
+.hero-cta.primary:hover{background:var(--ink-green)}
+.hero-cta.ghost{background:#fff;color:var(--ink-green);border:1.5px solid var(--hairline)}
+.hero-cta.ghost:hover{border-color:var(--pine)}
+.hero-cta svg{transition:transform .25s}
+.hero-cta:hover svg{transform:translateX(4px)}
 .hero-proof{margin-top:72px;font-size:14px;color:var(--gray-text);letter-spacing:.01em}
 .hero-proof b{color:var(--ink-green);font-weight:600}
 
@@ -235,6 +243,8 @@ footer{border-top:1px solid var(--hairline);padding:40px 24px 48px}
 }
 @media (max-width:640px){
   .nav-links li:not(:last-child){display:none}
+  .hero-ctas{flex-direction:column;align-items:stretch}
+  .hero-cta{justify-content:center}
   .hero-form{flex-direction:column;align-items:stretch;gap:6px}
   .hero-form button{align-self:flex-start}
   .path{grid-template-columns:1fr;gap:8px}
@@ -277,6 +287,10 @@ footer{border-top:1px solid var(--hairline);padding:40px 24px 48px}
   <p class="eyebrow reveal">For parents who just heard "your child is nearsighted"</p>
   <h1 class="reveal">No more<br>myopia panic.</h1>
   <p class="sub reveal">A calm, evidence-based system for your child's myopia — from a vision specialist who has guided 10,000+ families over 25 years, including his own two sons.</p>
+  <div class="hero-ctas reveal">
+    <a class="hero-cta primary" href="/tools/axial-length-projector.html">Plot your child's lane — free tool <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="hero-cta ghost" href="https://app.6smyopia.com">Open the 6S tracker <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
+  </div>
   <form class="hero-form reveal" action="https://assets.mailerlite.com/jsonp/2647845/forms/199135831245456781/subscribe" method="post" target="_blank" rel="noopener">
     <input type="email" name="fields[email]" placeholder="Your email address" aria-label="Email address" autocomplete="email" requi
     <button type="submit">Send it free <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
