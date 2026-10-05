@@ -478,7 +478,7 @@ function drawSE(ctx,W,H,age,eyes){
   eyes.forEach(function(e){seMax=Math.max(seMax,seStart(e));seMin=Math.min(seMin,seEnd(e));});
   var smax=Math.max(1.5,Math.ceil((seMax+0.4)*2)/2),smin=Math.min(-8.5,Math.floor((seMin-0.4)*2)/2);
   function X(a){return x0+(a-xs0)/(18-xs0)*(x1-x0);}
-  function Y(d){return y0+(smax-d)/(smax-smin)*(y1-y0);}
+  function Y(d){return y0+(d-smin)/(smax-smin)*(y1-y0);} // 翻转：越近视越靠上，与 App 一致
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
   ctx.strokeStyle='rgba(0,0,0,.07)';ctx.lineWidth=1;
   ctx.font='24px Inter,sans-serif';ctx.fillStyle='#6E6E73';
@@ -489,9 +489,16 @@ function drawSE(ctx,W,H,age,eyes){
   ctx.strokeStyle='rgba(192,57,43,.35)';ctx.setLineDash([4,6]);ctx.lineWidth=2;
   ctx.beginPath();ctx.moveTo(x0,Y(0));ctx.lineTo(x1,Y(0));ctx.stroke();
   ctx.beginPath();ctx.moveTo(x0,Y(-6));ctx.lineTo(x1,Y(-6));ctx.stroke();ctx.setLineDash([]);
-  ctx.fillStyle='#C0392B';ctx.textAlign='left';ctx.font='20px Inter,sans-serif';
-  ctx.fillText('Myopia onset (0.00 D)',x0+14,Y(0)-8);
-  ctx.fillText('High myopia (\u22126.00 D)',x0+14,Y(-6)-8);
+  ctx.fillStyle='#C0392B';ctx.font='20px Inter,sans-serif';
+  var nearEnd=function(d,eps){return eyes.some(function(e){return Math.abs(seEnd(e)-d)<eps;});};
+  var nearStart=function(d,eps){return eyes.some(function(e){return Math.abs(seStart(e)-d)<eps;});};
+  var oR=!nearEnd(0,0.9),oY=Y(0)-8;
+  if(!oR&&nearStart(0,0.9))oY=Y(0)+26;
+  ctx.textAlign=oR?'right':'left';
+  ctx.fillText('Myopia onset (0.00 D)',oR?x1-14:x0+14,oY);
+  var hR=!nearEnd(-6,0.9);
+  ctx.textAlign=hR?'right':'left';
+  ctx.fillText('High myopia (\u22126.00 D)',hR?x1-14:x0+14,Y(-6)+24);
   eyes.forEach(function(e){
     var col=eyeColor(e.side);
     var se0=seStart(e), se1=seEnd(e);
@@ -500,7 +507,7 @@ function drawSE(ctx,W,H,age,eyes){
     ctx.beginPath();ctx.arc(X(age),Y(se0),10,0,7);ctx.fillStyle=col;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
     ctx.beginPath();ctx.arc(X(18),Y(se1),10,0,7);ctx.fillStyle=se1<=-6?RED:col;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='#fff';ctx.stroke();
   });
-  var mstarts=eyes.filter(function(e){return e.seNow!=null;}).sort(function(a,b){return seStart(b)-seStart(a);});
+  var mstarts=eyes.filter(function(e){return e.seNow!=null;}).sort(function(a,b){return seStart(a)-seStart(b);});
   var prevM=-Infinity;
   mstarts.forEach(function(e){
     var ty=Y(seStart(e))-14;
@@ -511,7 +518,7 @@ function drawSE(ctx,W,H,age,eyes){
     var lbl=fmtD(e.seNow,2)+' now \u00B7 '+(e.side==='L'?'L':'R');
     ctx.strokeText(lbl,X(age)+16,ty);ctx.fillText(lbl,X(age)+16,ty);
   });
-  var ends=eyes.slice().sort(function(a,b){return seEnd(b)-seEnd(a);});
+  var ends=eyes.slice().sort(function(a,b){return seEnd(a)-seEnd(b);}); // 翻转后:最负在最上
   var prevY=-Infinity;
   ends.forEach(function(e){
     var se1=seEnd(e);
