@@ -384,12 +384,16 @@ function valAt(arr,age){
 }
 function fracAt(L,age){
   var vs=DS.curves.map(function(c){return valAt(c,age);});
-  if(L<=vs[0])return 0; if(L>=vs[6])return 1;
+  if(L<vs[0])return ((L-vs[0])/(vs[1]-vs[0]))/6;      // P5 以下：按 P5–P10 带宽外推（f<0）
+  if(L>vs[6])return (6+(L-vs[6])/(vs[6]-vs[5]))/6;    // P95 以上：按 P90–P95 带宽外推（f>1）
   for(var k=0;k<6;k++){ if(L>=vs[k]&&L<=vs[k+1]) return (k+(L-vs[k])/(vs[k+1]-vs[k]))/6; }
   return 1;
 }
 function laneVal(f,age){
-  var g=f*6, k=Math.min(5,Math.floor(g)), t=g-k;
+  var g=f*6;
+  if(g<0)return valAt(DS.curves[0],age)+g*(valAt(DS.curves[1],age)-valAt(DS.curves[0],age));
+  if(g>6)return valAt(DS.curves[6],age)+(g-6)*(valAt(DS.curves[6],age)-valAt(DS.curves[5],age));
+  var k=Math.min(5,Math.floor(g)), t=g-k;
   return valAt(DS.curves[k],age)+t*(valAt(DS.curves[k+1],age)-valAt(DS.curves[k],age));
 }
 function pctOf(f){
@@ -411,10 +415,11 @@ function seEnd(e){return e.seNow!=null?e.seNow+(seMid(e.pred)-seMid(e.L)):seMid(
 var PINE='#2E9C8C',INK='#14332D',RED='#C0392B',BLUE='#2563EB',TEAL='#2E9C8C';
 function eyeColor(side){return side==='L'?BLUE:TEAL;} // 左眼蓝、右眼青，与 App 一致
 
-function drawBase(ctx,W,H){
+function drawBase(ctx,W,H,ext){
   var padL=104,padR=56,padT=30,padB=64;
   var x0=padL,x1=W-padR,y0=padT,y1=H-padB;
   var vmin=20.5,vmax=DS.vmax,xs0=DS.start;
+  if(ext){if(ext.vmin<vmin)vmin=ext.vmin; if(ext.vmax>vmax)vmax=ext.vmax;} // 超出曲线时扩展量程
   function X(a){return x0+(a-xs0)/(18-xs0)*(x1-x0);}
   function Y(v){return y1-(v-vmin)/(vmax-vmin)*(y1-y0);}
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
@@ -422,7 +427,7 @@ function drawBase(ctx,W,H){
   ctx.font='24px Inter,sans-serif';ctx.fillStyle='#6E6E73';ctx.textAlign='center';
   for(var a=Math.ceil(xs0/3)*3;a<=18;a+=3){ctx.beginPath();ctx.moveTo(X(a),y0);ctx.lineTo(X(a),y1);ctx.stroke();ctx.fillText(a,X(a),y1+30);}
   ctx.textAlign='right';
-  for(var v=21;v<=Math.floor(vmax);v++){ctx.beginPath();ctx.moveTo(x0,Y(v));ctx.lineTo(x1,Y(v));ctx.stroke();ctx.fillText(v+'.0',x0-14,Y(v)+8);}
+  for(var v=Math.ceil(vmin);v<=Math.floor(vmax);v++){ctx.beginPath();ctx.moveTo(x0,Y(v));ctx.lineTo(x1,Y(v));ctx.stroke();ctx.fillText(v+'.0',x0-14,Y(v)+8);}
   ctx.save();ctx.translate(28,(y0+y1)/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.fillText('Axial length (mm)',0,0);ctx.restore();
   ctx.textAlign='center';ctx.fillText('Age (years)',(x0+x1)/2,H-8);
   for(var c=0;c<7;c++){
@@ -436,7 +441,9 @@ function drawBase(ctx,W,H){
   return {X:X,Y:Y};
 }
 function drawChart(ctx,W,H,age,eyes){
-  var g=drawBase(ctx,W,H);
+  var lo=Infinity,hi=-Infinity;
+  eyes.forEach(function(e){lo=Math.min(lo,e.L,e.pred);hi=Math.max(hi,e.L,e.pred);});
+  var g=drawBase(ctx,W,H,{vmin:Math.floor((lo-0.3)*10)/10,vmax:Math.ceil((hi+0.3)*10)/10});
   eyes.forEach(function(e){
     var col=eyeColor(e.side);
     ctx.beginPath();
